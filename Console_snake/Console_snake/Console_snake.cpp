@@ -6,8 +6,8 @@
 
 int main()
 {
-    Game game;
-    game.play();
+	Game game;
+	game.play();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
