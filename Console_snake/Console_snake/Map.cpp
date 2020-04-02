@@ -49,17 +49,13 @@ void Map::placeObstacleAt(int row, int column)
 
 void Map::generateObstacles()
 {
-	for (int i = 0; i < height; i++)
+	for (int row = 0; row < height; row++)
 	{
-		for (int j = 0; j < width; j++)
+		for (int column = 0; column < width; column++)
 		{
-			if ((i + j) % 5 == 0)
+			if (row == 0 || column == 0 || row + 1 == height || column + 1 == width)
 			{
-				cells[i][j] = make_shared<ObstacleCell>();
-			}
-			if ((i + j) % 7 == 0)
-			{
-				cells[i][j] = make_shared<ValueCell>(j);
+				cells[row][column] = make_shared<ObstacleCell>();
 			}
 		}
 	}
