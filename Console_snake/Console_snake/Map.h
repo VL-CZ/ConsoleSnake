@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <iostream>
 #include "Cell.h"
 class Map
 {
@@ -10,9 +11,12 @@ public:
 	int getWidth();
 
 	void print();
+	void placeObstacleAt(int row, int column);
 private:
 	int height;
 	int width;
-	std::vector<std::vector<Cell>> cells;
+	std::vector<std::vector<std::shared_ptr<BaseCell>>> cells;
+	
+	void generateObstacles();
 };
 
