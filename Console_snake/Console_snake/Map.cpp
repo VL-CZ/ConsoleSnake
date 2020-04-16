@@ -1,10 +1,11 @@
 #include "Map.h"
 using namespace std;
 
-Map::Map(int height, int width)
+Map::Map(int height, int width, std::vector<std::shared_ptr<BaseSnake>> snakes)
 {
 	this->height = height;
 	this->width = width;
+	this->snakes = snakes;
 
 	for (int i = 0; i < height; i++)
 	{

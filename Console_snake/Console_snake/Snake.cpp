@@ -4,7 +4,19 @@ void UserSnake::move()
 {
 }
 
+UserSnake::UserSnake(std::string name) : BaseSnake(name)
+{
+}
+
 void AISnake::move()
+{
+}
+
+AISnake::AISnake(std::string name) : BaseSnake(name)
+{
+}
+
+BaseSnake::BaseSnake(std::string name): name(name), points(0)
 {
 }
 

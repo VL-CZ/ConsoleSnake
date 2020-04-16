@@ -7,7 +7,7 @@
 class Map
 {
 public:
-	Map(int height, int width);
+	Map(int height, int width, std::vector<std::shared_ptr<BaseSnake>> snakes);
 
 	int getHeight();
 	int getWidth();

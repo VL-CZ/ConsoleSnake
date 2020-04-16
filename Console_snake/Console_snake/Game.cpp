@@ -42,5 +42,10 @@ void Game::initialize()
 	cout << "Zadejte pocet hadu ovladanych pocitacem" << endl;
 	cin >> AI_snakesCount;
 
-	map = make_shared<Map>(boardHeight, boardWidth);
+	shared_ptr<BaseSnake> userSnake = make_shared<UserSnake>("User");
+
+	vector<shared_ptr<BaseSnake>> snakes;
+	snakes.push_back(userSnake);
+
+	map = make_shared<Map>(boardHeight, boardWidth, snakes);
 }
