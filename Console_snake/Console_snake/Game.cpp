@@ -8,11 +8,23 @@ Game::Game()
 void Game::play()
 {
 	initialize();
-	map->print();
+	while (true)
+	{
+		update();
+	}
 }
 
 void Game::update()
 {
+	system("cls");
+
+	int rn = rand() % 3;
+	if (rn == 0)
+	{
+		map->tryGenerateRandomValueCell();
+	}
+
+	map->print();
 }
 
 void Game::initialize()

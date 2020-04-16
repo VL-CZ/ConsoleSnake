@@ -11,7 +11,7 @@ public:
 	int getWidth();
 
 	void print();
-	void placeObstacleAt(int row, int column);
+	void tryGenerateRandomValueCell();
 private:
 	int height;
 	int width;

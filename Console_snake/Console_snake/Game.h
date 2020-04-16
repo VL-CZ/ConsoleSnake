@@ -10,7 +10,7 @@ public:
 	void play();
 private:
 	std::shared_ptr<Map> map;
-	std::vector<std::shared_ptr<BaseSnake>> snake;
+	std::vector<std::shared_ptr<BaseSnake>> snakes;
 
 	void update();
 	void initialize();

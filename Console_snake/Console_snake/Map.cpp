@@ -42,9 +42,20 @@ void Map::print()
 	}
 }
 
-void Map::placeObstacleAt(int row, int column)
+void Map::tryGenerateRandomValueCell()
 {
-	cells[row][column] = make_shared<ObstacleCell>();
+	const int maxExclusiveValue = 10;
+	int row = rand() % height;
+	int column = rand() % width;
+	int value = rand() % maxExclusiveValue;
+
+	if (dynamic_pointer_cast<EmptyCell>(cells[row][column]) == NULL)
+	{
+		return;
+	}
+
+	shared_ptr<ValueCell> valueCell = make_shared<ValueCell>(value);
+	cells[row][column] = valueCell;
 }
 
 void Map::generateObstacles()
