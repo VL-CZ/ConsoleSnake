@@ -3,7 +3,7 @@ using namespace std;
 
 std::string EmptyCell::toString()
 {
-	return "+";
+	return " ";
 }
 
 std::string ObstacleCell::toString()

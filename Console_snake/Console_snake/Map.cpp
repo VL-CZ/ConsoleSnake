@@ -40,6 +40,8 @@ void Map::print()
 		}
 		cout << endl;
 	}
+
+	printSummary();
 }
 
 void Map::tryGenerateRandomValueCell()
@@ -49,7 +51,7 @@ void Map::tryGenerateRandomValueCell()
 	int column = rand() % width;
 	int value = rand() % maxExclusiveValue;
 
-	if (dynamic_pointer_cast<EmptyCell>(cells[row][column]) == NULL)
+	if (dynamic_pointer_cast<EmptyCell>(cells[row][column]) == NULL || value == 0)
 	{
 		return;
 	}
@@ -69,5 +71,16 @@ void Map::generateObstacles()
 				cells[row][column] = make_shared<ObstacleCell>();
 			}
 		}
+	}
+}
+
+void Map::printSummary()
+{
+	cout << "\n\n\n";
+
+	for (int i = 0; i < snakes.size(); i++)
+	{
+		shared_ptr<BaseSnake> snake = snakes[i];
+		cout << snake->getName() << " : " << snake->getPoints() << endl;
 	}
 }
