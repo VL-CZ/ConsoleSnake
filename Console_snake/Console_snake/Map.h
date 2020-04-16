@@ -11,6 +11,7 @@ public:
 
 	int getHeight();
 	int getWidth();
+	int getCellCount();
 
 	void print();
 	void tryGenerateRandomValueCell();
@@ -22,5 +23,6 @@ private:
 	
 	void generateObstacles();
 	void printSummary();
+	bool isEmpty(int row, int column);
 };
 
