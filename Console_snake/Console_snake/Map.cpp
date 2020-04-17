@@ -46,7 +46,7 @@ void Map::print()
 		}
 		cout << endl;
 	}
-
+	snakes[0]->move();
 	printSummary();
 }
 
@@ -79,7 +79,7 @@ void Map::generateObstacles()
 		}
 	}
 
-	float obstaclesProportion = (float)1 / 5;
+	float obstaclesProportion = (float)1 / 10;
 	int totalObstacles = (int)round(obstaclesProportion * getCellCount());
 
 	for (int i = 0; i < totalObstacles; i++)

@@ -29,3 +29,21 @@ public:
 private:
 	int value;
 };
+
+class SnakeBodyCell : public BaseCell 
+{
+	// Inherited via BaseCell
+	virtual std::string toString() override;
+};
+
+class AISnakeHeadCell : public BaseCell
+{
+	// Inherited via BaseCell
+	virtual std::string toString() override;
+};
+
+class UserSnakeHeadCell : public BaseCell
+{
+	// Inherited via BaseCell
+	virtual std::string toString() override;
+};

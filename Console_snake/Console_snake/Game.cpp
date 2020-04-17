@@ -1,14 +1,14 @@
 #include "Game.h"
 using namespace std;
 
-Game::Game()
+Game::Game() : running(true)
 {
 }
 
 void Game::play()
 {
 	initialize();
-	while (true)
+	while (running)
 	{
 		update();
 	}
@@ -18,7 +18,7 @@ void Game::update()
 {
 	system("cls");
 
-	int rn = rand() % 3;
+	int rn = rand() % 5;
 	if (rn == 0)
 	{
 		map->tryGenerateRandomValueCell();

@@ -19,3 +19,18 @@ std::string ValueCell::toString()
 ValueCell::ValueCell(int value) : value(value)
 {
 }
+
+std::string SnakeBodyCell::toString()
+{
+	return "O";
+}
+
+std::string AISnakeHeadCell::toString()
+{
+	return "@";
+}
+
+std::string UserSnakeHeadCell::toString()
+{
+	return "@";
+}

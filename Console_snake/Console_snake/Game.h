@@ -9,6 +9,7 @@ public:
 
 	void play();
 private:
+	bool running;
 	std::shared_ptr<Map> map;
 	std::vector<std::shared_ptr<BaseSnake>> snakes;
 
