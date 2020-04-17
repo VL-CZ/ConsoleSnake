@@ -3,7 +3,7 @@
 
 void UserSnake::move()
 {
-	tryChangeDirection();
+	tryToChangeDirection();
 	
 
 }
@@ -12,7 +12,7 @@ UserSnake::UserSnake(std::string name) : BaseSnake(name)
 {
 }
 
-void UserSnake::tryChangeDirection()
+void UserSnake::tryToChangeDirection()
 {
 	if (_kbhit())
 	{

@@ -34,7 +34,7 @@ private:
 	char moveLeftKey = 'a';
 	char moveRightKey = 'd';
 
-	void tryChangeDirection();
+	void tryToChangeDirection();
 };
 
 class AISnake : public BaseSnake
