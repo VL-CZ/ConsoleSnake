@@ -1,14 +1,33 @@
 #include "Snake.h"
 #include <conio.h>
+#include <memory>
+using namespace std;
 
 void UserSnake::move()
 {
 	tryToChangeDirection();
-	
 
+	switch (direction)
+	{
+	case Direction::Up:
+		headPosition.row--;
+		break;
+	case Direction::Left:
+		headPosition.column--;
+		break;
+	case Direction::Right:
+		headPosition.column++;
+		break;
+	case Direction::Down:
+		headPosition.row++;
+		break;
+	}
+	auto head = make_shared<UserSnakeHeadCell>();
+	map->cells[headPosition.row][headPosition.column] = head;
 }
 
-UserSnake::UserSnake(std::string name) : BaseSnake(name)
+UserSnake::UserSnake(std::string name, MapCoordinates position, Direction direction, std::shared_ptr<Map> map) : 
+	BaseSnake(name, position, direction, map)
 {
 }
 
@@ -41,12 +60,16 @@ void AISnake::move()
 {
 }
 
-AISnake::AISnake(std::string name) : BaseSnake(name)
+AISnake::AISnake(std::string name, MapCoordinates position, Direction direction, std::shared_ptr<Map> map) : 
+	BaseSnake(name, position, direction, map)
 {
 }
 
-BaseSnake::BaseSnake(std::string name) : name(name), points(0), direction(Direction::Left)
+BaseSnake::BaseSnake(std::string name, MapCoordinates position, Direction direction, std::shared_ptr<Map> map) :
+	name(name), points(0), direction(direction), headPosition(position), map(map)
 {
+	auto headCell = make_shared<UserSnakeHeadCell>();
+	map->cells[headPosition.row][headPosition.column] = headCell;
 }
 
 int BaseSnake::getPoints()

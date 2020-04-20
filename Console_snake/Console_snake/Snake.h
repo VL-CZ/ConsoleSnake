@@ -1,15 +1,17 @@
 #pragma once
-#include<iostream>
+#include <iostream>
+#include <vector>
 #include "Direction.h"
 #include "Cell.h"
-#include <vector>
+#include "Map.h"
+#include "MapCoordinates.h"
 
 class BaseSnake
 {
 public:
-	BaseSnake(std::string name);
+	BaseSnake(std::string name, MapCoordinates position, Direction direction, std::shared_ptr<Map> map);
 
-	int getPoints(); 
+	int getPoints();
 	std::string getName();
 	std::shared_ptr<BaseCell> getHead();
 
@@ -18,9 +20,10 @@ protected:
 	int points;
 	Direction direction;
 	std::vector<std::shared_ptr<BaseCell>> cells;
+	MapCoordinates headPosition;
+	std::shared_ptr<Map> map;
 private:
 	std::string name;
-	/*std::shared_ptr<Map> map;*/
 };
 
 class UserSnake : public BaseSnake
@@ -29,7 +32,7 @@ class UserSnake : public BaseSnake
 	virtual void move() override;
 
 public:
-	UserSnake(std::string name);
+	UserSnake(std::string name, MapCoordinates position, Direction direction, std::shared_ptr<Map> map);
 private:
 	char moveUpKey = 'w';
 	char moveDownKey = 's';
@@ -45,5 +48,5 @@ class AISnake : public BaseSnake
 	virtual void move() override;
 
 public:
-	AISnake(std::string name);
+	AISnake(std::string name, MapCoordinates position, Direction direction, std::shared_ptr<Map> map);
 };

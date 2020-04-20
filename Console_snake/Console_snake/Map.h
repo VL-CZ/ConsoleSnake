@@ -6,7 +6,9 @@
 class Map
 {
 public:
-	Map(int height, int width);
+	std::vector<std::vector<std::shared_ptr<BaseCell>>> cells;
+	
+	Map(int height, int width, float obstacleProportion);
 
 	int getHeight();
 	int getWidth();
@@ -17,9 +19,8 @@ public:
 private:
 	int height;
 	int width;
-	std::vector<std::vector<std::shared_ptr<BaseCell>>> cells;
 	
-	void generateObstacles();
+	void generateObstacles(float obstacleProportion);
 	bool isEmpty(int row, int column);
 };
 

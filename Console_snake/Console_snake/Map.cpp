@@ -1,7 +1,7 @@
 #include "Map.h"
 using namespace std;
 
-Map::Map(int height, int width)
+Map::Map(int height, int width, float obstacleProportion)
 {
 	this->height = height;
 	this->width = width;
@@ -17,7 +17,7 @@ Map::Map(int height, int width)
 		}
 	}
 
-	generateObstacles();
+	generateObstacles(obstacleProportion);
 }
 
 int Map::getHeight()
@@ -62,7 +62,7 @@ void Map::tryGenerateRandomValueCell()
 	cells[row][column] = make_shared<ValueCell>(value);
 }
 
-void Map::generateObstacles()
+void Map::generateObstacles(float obstacleProportion)
 {
 	// generate map borders
 	for (int row = 0; row < height; row++)
@@ -76,8 +76,7 @@ void Map::generateObstacles()
 		}
 	}
 
-	float obstaclesProportion = (float)1 / 10;
-	int totalObstacles = (int)round(obstaclesProportion * getCellCount());
+	int totalObstacles = (int)round(obstacleProportion * getCellCount());
 
 	for (int i = 0; i < totalObstacles; i++)
 	{
