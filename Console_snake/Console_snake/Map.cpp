@@ -1,11 +1,10 @@
 #include "Map.h"
 using namespace std;
 
-Map::Map(int height, int width, std::vector<std::shared_ptr<BaseSnake>> snakes)
+Map::Map(int height, int width)
 {
 	this->height = height;
 	this->width = width;
-	this->snakes = snakes;
 
 	for (int i = 0; i < height; i++)
 	{
@@ -46,8 +45,6 @@ void Map::print()
 		}
 		cout << endl;
 	}
-	snakes[0]->move();
-	printSummary();
 }
 
 void Map::tryGenerateRandomValueCell()
@@ -91,17 +88,6 @@ void Map::generateObstacles()
 		{
 			cells[row][column] = make_shared<ObstacleCell>();
 		}
-	}
-}
-
-void Map::printSummary()
-{
-	cout << "\n\n\n";
-
-	for (int i = 0; i < snakes.size(); i++)
-	{
-		shared_ptr<BaseSnake> snake = snakes[i];
-		cout << snake->getName() << " : " << snake->getPoints() << endl;
 	}
 }
 

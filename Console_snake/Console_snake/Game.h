@@ -15,5 +15,6 @@ private:
 
 	void update();
 	void initialize();
+	void printSummary();
 };
 

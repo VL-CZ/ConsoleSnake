@@ -59,12 +59,7 @@ std::string BaseSnake::getName()
 	return name;
 }
 
-Direction BaseSnake::getDirection()
+std::shared_ptr<BaseCell> BaseSnake::getHead()
 {
-	return direction;
-}
-
-void BaseSnake::setDirection(Direction d)
-{
-	direction = d;
+	return cells[0];
 }

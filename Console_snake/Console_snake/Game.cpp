@@ -24,6 +24,11 @@ void Game::update()
 		map->tryGenerateRandomValueCell();
 	}
 
+	for (auto x : snakes)
+	{
+		x->move();
+	}
+
 	map->print();
 }
 
@@ -47,5 +52,15 @@ void Game::initialize()
 	vector<shared_ptr<BaseSnake>> snakes;
 	snakes.push_back(userSnake);
 
-	map = make_shared<Map>(boardHeight, boardWidth, snakes);
+	map = make_shared<Map>(boardHeight, boardWidth);
+}
+
+void Game::printSummary()
+{
+	cout << "\n\n\n";
+
+	for (auto snake : snakes)
+	{
+		cout << snake->getName() << " : " << snake->getPoints() << endl;
+	}
 }

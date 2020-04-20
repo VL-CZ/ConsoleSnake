@@ -1,21 +1,23 @@
 #pragma once
 #include<iostream>
 #include "Direction.h"
+#include "Cell.h"
+#include <vector>
 
 class BaseSnake
 {
 public:
 	BaseSnake(std::string name);
 
-	int getPoints();
+	int getPoints(); 
 	std::string getName();
-	Direction getDirection();
-	void setDirection(Direction d);
+	std::shared_ptr<BaseCell> getHead();
 
 	virtual void move() = 0;
 protected:
 	int points;
 	Direction direction;
+	std::vector<std::shared_ptr<BaseCell>> cells;
 private:
 	std::string name;
 	/*std::shared_ptr<Map> map;*/
