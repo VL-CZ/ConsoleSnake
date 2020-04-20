@@ -1,10 +1,10 @@
 #pragma once
-class MapCoordinates
+struct MapCoordinates
 {
-public:
-	MapCoordinates(int row, int column);
-
 	int row;
 	int column;
+
+	MapCoordinates(int row, int column): row(row), column(column)
+	{}
 };
 

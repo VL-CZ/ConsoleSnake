@@ -149,7 +149,6 @@
   <ItemGroup>
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="MapCoordinates.cpp" />
     <ClCompile Include="Snake.cpp" />
     <ClCompile Include="Console_snake.cpp" />
     <ClCompile Include="Map.cpp" />
