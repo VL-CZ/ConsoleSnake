@@ -5,6 +5,7 @@
 #include "Cell.h"
 #include "Map.h"
 #include "MapCoordinates.h"
+#include <queue>
 
 class BaseSnake
 {
@@ -13,13 +14,12 @@ public:
 
 	int getPoints();
 	std::string getName();
-	std::shared_ptr<BaseCell> getHead();
 
 	virtual void move() = 0;
 protected:
 	int points;
 	Direction direction;
-	std::vector<std::shared_ptr<BaseCell>> cells;
+	std::queue<MapPosition> cells;
 	MapPosition headPosition;
 	std::shared_ptr<Map> map;
 private:

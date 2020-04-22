@@ -33,6 +33,11 @@ void UserSnake::move()
 		map->SetCellAtPosition(newPosition, head);
 
 		headPosition = newPosition;
+		cells.push(headPosition);
+
+		auto emptyCell = make_shared<EmptyCell>();
+		map->SetCellAtPosition(cells.front(), emptyCell);
+		cells.pop();
 	}
 }
 
@@ -78,8 +83,15 @@ AISnake::AISnake(std::string name, MapPosition position, Direction direction, st
 BaseSnake::BaseSnake(std::string name, MapPosition position, Direction direction, std::shared_ptr<Map> map) :
 	name(name), points(0), direction(direction), headPosition(position), map(map)
 {
+	cells.push(headPosition);
 	auto headCell = make_shared<UserSnakeHeadCell>();
 	map->SetCellAtPosition(headPosition, headCell);
+
+	// test
+	MapPosition bodyPosition(headPosition.row, headPosition.column + 1);
+	cells.push(bodyPosition);
+	auto bodyCell = make_shared<SnakeBodyCell>();
+	map->SetCellAtPosition(bodyPosition, bodyCell);
 }
 
 int BaseSnake::getPoints()
@@ -90,9 +102,4 @@ int BaseSnake::getPoints()
 std::string BaseSnake::getName()
 {
 	return name;
-}
-
-std::shared_ptr<BaseCell> BaseSnake::getHead()
-{
-	return cells[0];
 }
