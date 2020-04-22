@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include "Cell.h"
+#include "MapCoordinates.h"
 
 class Map
 {
@@ -16,6 +17,8 @@ public:
 
 	void print();
 	void tryGenerateRandomValueCell();
+	bool isEmpty(MapPosition position);
+	std::shared_ptr<BaseCell> GetCellAtPosition(MapPosition position);
 private:
 	int height;
 	int width;

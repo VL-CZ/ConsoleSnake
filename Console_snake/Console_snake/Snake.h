@@ -9,7 +9,7 @@
 class BaseSnake
 {
 public:
-	BaseSnake(std::string name, MapCoordinates position, Direction direction, std::shared_ptr<Map> map);
+	BaseSnake(std::string name, MapPosition position, Direction direction, std::shared_ptr<Map> map);
 
 	int getPoints();
 	std::string getName();
@@ -20,7 +20,7 @@ protected:
 	int points;
 	Direction direction;
 	std::vector<std::shared_ptr<BaseCell>> cells;
-	MapCoordinates headPosition;
+	MapPosition headPosition;
 	std::shared_ptr<Map> map;
 private:
 	std::string name;
@@ -32,7 +32,7 @@ class UserSnake : public BaseSnake
 	virtual void move() override;
 
 public:
-	UserSnake(std::string name, MapCoordinates position, Direction direction, std::shared_ptr<Map> map);
+	UserSnake(std::string name, MapPosition position, Direction direction, std::shared_ptr<Map> map);
 private:
 	char moveUpKey = 'w';
 	char moveDownKey = 's';
@@ -48,5 +48,5 @@ class AISnake : public BaseSnake
 	virtual void move() override;
 
 public:
-	AISnake(std::string name, MapCoordinates position, Direction direction, std::shared_ptr<Map> map);
+	AISnake(std::string name, MapPosition position, Direction direction, std::shared_ptr<Map> map);
 };

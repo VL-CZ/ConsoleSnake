@@ -50,7 +50,7 @@ void Game::initialize()
 
 	map = make_shared<Map>(boardHeight, boardWidth, 0.1);
 
-	shared_ptr<BaseSnake> userSnake = make_shared<UserSnake>("User", MapCoordinates(10, 10), Direction::Left, map);
+	shared_ptr<BaseSnake> userSnake = make_shared<UserSnake>("User", MapPosition(10, 10), Direction::Left, map);
 	snakes.push_back(userSnake);
 }
 

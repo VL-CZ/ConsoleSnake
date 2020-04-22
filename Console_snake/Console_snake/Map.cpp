@@ -62,6 +62,16 @@ void Map::tryGenerateRandomValueCell()
 	cells[row][column] = make_shared<ValueCell>(value);
 }
 
+bool Map::isEmpty(MapPosition position)
+{
+	return isEmpty(position.row, position.column);
+}
+
+std::shared_ptr<BaseCell> Map::GetCellAtPosition(MapPosition position)
+{
+	return cells[position.row][position.column];
+}
+
 void Map::generateObstacles(float obstacleProportion)
 {
 	// generate map borders
@@ -92,5 +102,6 @@ void Map::generateObstacles(float obstacleProportion)
 
 bool Map::isEmpty(int row, int column)
 {
-	return dynamic_pointer_cast<EmptyCell>(cells[row][column]) != NULL;
+	return dynamic_pointer_cast<EmptyCell>(cells[row][column]) != NULL || 
+		dynamic_pointer_cast<ValueCell>(cells[row][column]) != NULL;
 }
