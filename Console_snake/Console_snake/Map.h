@@ -7,7 +7,6 @@
 class Map
 {
 public:
-	std::vector<std::vector<std::shared_ptr<BaseCell>>> cells;
 	
 	Map(int height, int width, float obstacleProportion);
 
@@ -19,9 +18,11 @@ public:
 	void tryGenerateRandomValueCell();
 	bool isEmpty(MapPosition position);
 	std::shared_ptr<BaseCell> GetCellAtPosition(MapPosition position);
+	void SetCellAtPosition(MapPosition position, std::shared_ptr<BaseCell> cell);
 private:
 	int height;
 	int width;
+	std::vector<std::vector<std::shared_ptr<BaseCell>>> cells;
 	
 	void generateObstacles(float obstacleProportion);
 	bool isEmpty(int row, int column);

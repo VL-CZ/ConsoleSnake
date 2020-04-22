@@ -72,6 +72,11 @@ std::shared_ptr<BaseCell> Map::GetCellAtPosition(MapPosition position)
 	return cells[position.row][position.column];
 }
 
+void Map::SetCellAtPosition(MapPosition position, std::shared_ptr<BaseCell> cell)
+{
+	cells[position.row][position.column] = cell;
+}
+
 void Map::generateObstacles(float obstacleProportion)
 {
 	// generate map borders
