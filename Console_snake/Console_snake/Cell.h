@@ -26,6 +26,8 @@ class ValueCell : public BaseCell
 
 public:
 	ValueCell(int value);
+
+	int getValue();
 private:
 	int value;
 };

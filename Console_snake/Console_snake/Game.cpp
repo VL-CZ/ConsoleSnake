@@ -56,7 +56,7 @@ void Game::initialize()
 
 void Game::printSummary()
 {
-	cout << "\n\n\n";
+	cout << endl << endl << endl;
 
 	for (auto snake : snakes)
 	{

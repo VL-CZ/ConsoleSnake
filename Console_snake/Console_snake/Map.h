@@ -17,8 +17,9 @@ public:
 	void print();
 	void tryGenerateRandomValueCell();
 	bool isEmpty(MapPosition position);
-	std::shared_ptr<BaseCell> GetCellAtPosition(MapPosition position);
-	void SetCellAtPosition(MapPosition position, std::shared_ptr<BaseCell> cell);
+	std::shared_ptr<BaseCell> getCellAtPosition(MapPosition position);
+	void setCellAtPosition(MapPosition position, std::shared_ptr<BaseCell> cell);
+	bool tryGetValue(MapPosition position, int& value);
 private:
 	int height;
 	int width;

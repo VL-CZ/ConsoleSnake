@@ -67,14 +67,28 @@ bool Map::isEmpty(MapPosition position)
 	return isEmpty(position.row, position.column);
 }
 
-std::shared_ptr<BaseCell> Map::GetCellAtPosition(MapPosition position)
+std::shared_ptr<BaseCell> Map::getCellAtPosition(MapPosition position)
 {
 	return cells[position.row][position.column];
 }
 
-void Map::SetCellAtPosition(MapPosition position, std::shared_ptr<BaseCell> cell)
+void Map::setCellAtPosition(MapPosition position, std::shared_ptr<BaseCell> cell)
 {
 	cells[position.row][position.column] = cell;
+}
+
+bool Map::tryGetValue(MapPosition position, int& value)
+{
+	auto valueCell = dynamic_pointer_cast<ValueCell>(getCellAtPosition(position));
+	if (valueCell != NULL)
+	{
+		value = valueCell->getValue();
+		return true;
+	}
+	else 
+	{
+		return false;
+	}
 }
 
 void Map::generateObstacles(float obstacleProportion)
@@ -107,6 +121,6 @@ void Map::generateObstacles(float obstacleProportion)
 
 bool Map::isEmpty(int row, int column)
 {
-	return dynamic_pointer_cast<EmptyCell>(cells[row][column]) != NULL || 
+	return dynamic_pointer_cast<EmptyCell>(cells[row][column]) != NULL ||
 		dynamic_pointer_cast<ValueCell>(cells[row][column]) != NULL;
 }

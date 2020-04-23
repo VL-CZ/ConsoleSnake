@@ -22,6 +22,8 @@ protected:
 	std::queue<MapPosition> cells;
 	MapPosition headPosition;
 	std::shared_ptr<Map> map;
+
+	void executeMove();
 private:
 	std::string name;
 };

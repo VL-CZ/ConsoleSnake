@@ -20,6 +20,11 @@ ValueCell::ValueCell(int value) : value(value)
 {
 }
 
+int ValueCell::getValue()
+{
+	return value;
+}
+
 std::string SnakeBodyCell::toString()
 {
 	return "O";

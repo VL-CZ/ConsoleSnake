@@ -3,42 +3,13 @@
 #include <memory>
 using namespace std;
 
+#pragma region UserSnake
+
 void UserSnake::move()
 {
 	tryToChangeDirection();
 
-	MapPosition newPosition = headPosition;
-	switch (direction)
-	{
-	case Direction::Up:
-		newPosition.row--;
-		break;
-	case Direction::Left:
-		newPosition.column--;
-		break;
-	case Direction::Right:
-		newPosition.column++;
-		break;
-	case Direction::Down:
-		newPosition.row++;
-		break;
-	}
-
-	if (map->isEmpty(newPosition))
-	{
-		auto body = make_shared<SnakeBodyCell>();
-		auto head = make_shared<UserSnakeHeadCell>();
-
-		map->SetCellAtPosition(headPosition, body);
-		map->SetCellAtPosition(newPosition, head);
-
-		headPosition = newPosition;
-		cells.push(headPosition);
-
-		auto emptyCell = make_shared<EmptyCell>();
-		map->SetCellAtPosition(cells.front(), emptyCell);
-		cells.pop();
-	}
+	executeMove();
 }
 
 UserSnake::UserSnake(std::string name, MapPosition position, Direction direction, std::shared_ptr<Map> map) :
@@ -71,6 +42,10 @@ void UserSnake::tryToChangeDirection()
 	}
 }
 
+#pragma endregion
+
+#pragma region AISnake
+
 void AISnake::move()
 {
 }
@@ -80,18 +55,22 @@ AISnake::AISnake(std::string name, MapPosition position, Direction direction, st
 {
 }
 
+#pragma endregion
+
+#pragma region BaseSnake
+
 BaseSnake::BaseSnake(std::string name, MapPosition position, Direction direction, std::shared_ptr<Map> map) :
 	name(name), points(0), direction(direction), headPosition(position), map(map)
 {
 	cells.push(headPosition);
 	auto headCell = make_shared<UserSnakeHeadCell>();
-	map->SetCellAtPosition(headPosition, headCell);
+	map->setCellAtPosition(headPosition, headCell);
 
 	// test
 	MapPosition bodyPosition(headPosition.row, headPosition.column + 1);
 	cells.push(bodyPosition);
 	auto bodyCell = make_shared<SnakeBodyCell>();
-	map->SetCellAtPosition(bodyPosition, bodyCell);
+	map->setCellAtPosition(bodyPosition, bodyCell);
 }
 
 int BaseSnake::getPoints()
@@ -103,3 +82,52 @@ std::string BaseSnake::getName()
 {
 	return name;
 }
+
+void BaseSnake::executeMove()
+{
+	MapPosition newPosition = headPosition;
+	switch (direction)
+	{
+	case Direction::Up:
+		newPosition.row--;
+		break;
+	case Direction::Left:
+		newPosition.column--;
+		break;
+	case Direction::Right:
+		newPosition.column++;
+		break;
+	case Direction::Down:
+		newPosition.row++;
+		break;
+	}
+
+	if (map->isEmpty(newPosition))
+	{
+		auto body = make_shared<SnakeBodyCell>();
+		auto head = make_shared<UserSnakeHeadCell>();
+
+		int points;
+		bool hasValue = map->tryGetValue(newPosition, points);
+
+		map->setCellAtPosition(headPosition, body);
+		map->setCellAtPosition(newPosition, head);
+
+		headPosition = newPosition;
+		cells.push(headPosition);
+
+		if (!hasValue)
+		{
+			auto emptyCell = make_shared<EmptyCell>();
+			map->setCellAtPosition(cells.front(), emptyCell);
+			cells.pop();
+		}
+		else
+		{
+			this->points += points;
+		}
+
+	}
+}
+
+#pragma endregion
