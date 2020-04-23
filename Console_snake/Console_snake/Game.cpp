@@ -24,10 +24,19 @@ void Game::update()
 		map->tryGenerateRandomValueCell();
 	}
 
+	bool activeSnakes = 0;
+
 	for (auto x : snakes)
 	{
-		x->move();
+		if (x->isAlive())
+		{
+			activeSnakes++;
+			x->move();
+		}
 	}
+
+	if (activeSnakes == 0)
+		running = false;
 
 	map->print();
 	printSummary();

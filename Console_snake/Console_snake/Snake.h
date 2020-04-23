@@ -14,8 +14,10 @@ public:
 
 	int getPoints();
 	std::string getName();
+	bool isAlive();
 
 	virtual void move() = 0;
+
 protected:
 	int points;
 	Direction direction;
@@ -26,6 +28,7 @@ protected:
 	void executeMove();
 private:
 	std::string name;
+	bool alive;
 };
 
 class UserSnake : public BaseSnake

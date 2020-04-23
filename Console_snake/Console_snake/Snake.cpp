@@ -60,7 +60,7 @@ AISnake::AISnake(std::string name, MapPosition position, Direction direction, st
 #pragma region BaseSnake
 
 BaseSnake::BaseSnake(std::string name, MapPosition position, Direction direction, std::shared_ptr<Map> map) :
-	name(name), points(0), direction(direction), headPosition(position), map(map)
+	name(name), points(0), direction(direction), headPosition(position), map(map), alive(true)
 {
 	cells.push(headPosition);
 	auto headCell = make_shared<UserSnakeHeadCell>();
@@ -81,6 +81,11 @@ int BaseSnake::getPoints()
 std::string BaseSnake::getName()
 {
 	return name;
+}
+
+bool BaseSnake::isAlive()
+{
+	return alive;
 }
 
 void BaseSnake::executeMove()
@@ -126,7 +131,10 @@ void BaseSnake::executeMove()
 		{
 			this->points += points;
 		}
-
+	}
+	else
+	{
+		alive = false;
 	}
 }
 
