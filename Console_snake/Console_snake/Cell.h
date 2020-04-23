@@ -32,20 +32,28 @@ private:
 	int value;
 };
 
+
+
 class SnakeBodyCell : public BaseCell 
 {
 	// Inherited via BaseCell
 	virtual std::string toString() override;
 };
 
-class AISnakeHeadCell : public BaseCell
+class SnakeHeadCell : public BaseCell
 {
 	// Inherited via BaseCell
+	virtual std::string toString() override = 0;
+};
+
+class AISnakeHeadCell : public SnakeHeadCell
+{
+	// Inherited via SnakeHeadCell
 	virtual std::string toString() override;
 };
 
-class UserSnakeHeadCell : public BaseCell
+class UserSnakeHeadCell : public SnakeHeadCell
 {
-	// Inherited via BaseCell
+	// Inherited via SnakeHeadCell
 	virtual std::string toString() override;
 };
