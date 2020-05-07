@@ -61,6 +61,12 @@ void Game::initialize()
 
 	shared_ptr<BaseSnake> userSnake = make_shared<UserSnake>("User", MapPosition(10, 10), Direction::Left, map);
 	snakes.push_back(userSnake);
+
+	for (int i = 0; i < AI_snakesCount; i++)
+	{
+		shared_ptr<AISnake> ai_snake = make_shared<AISnake>("Bot " + to_string(i), MapPosition(11, 10), Direction::Left, map);
+		snakes.push_back(ai_snake);
+	}
 }
 
 void Game::printSummary()
@@ -69,6 +75,6 @@ void Game::printSummary()
 
 	for (auto snake : snakes)
 	{
-		cout << snake->getName() << " : " << snake->getPoints() << endl;
+		cout << snake->getPoints() << " | " << snake->getName() << endl;
 	}
 }

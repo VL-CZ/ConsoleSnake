@@ -48,6 +48,9 @@ void UserSnake::tryToChangeDirection()
 
 void AISnake::move()
 {
+	this->direction = Direction::Left;
+
+	executeMove();
 }
 
 AISnake::AISnake(std::string name, MapPosition position, Direction direction, std::shared_ptr<Map> map) :

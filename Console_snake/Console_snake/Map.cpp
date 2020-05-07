@@ -1,4 +1,5 @@
 #include "Map.h"
+#include <time.h>
 using namespace std;
 
 Map::Map(int height, int width, float obstacleProportion)
@@ -106,6 +107,8 @@ void Map::generateObstacles(float obstacleProportion)
 	}
 
 	int totalObstacles = (int)round(obstacleProportion * getCellCount());
+
+	srand(time(NULL));
 
 	for (int i = 0; i < totalObstacles; i++)
 	{
