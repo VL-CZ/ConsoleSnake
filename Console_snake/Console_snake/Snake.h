@@ -54,8 +54,8 @@ class AISnake : public BaseSnake
 	virtual void move() override;
 
 private:
-	const int anotherSnakeHeadPriority = INT32_MIN;
-	const int wallOrSnakePriority = INT32_MIN / 2;
+	const int anotherSnakeHeadPriority = -150;
+	const int wallOrSnakePriority = -25;
 	const int oneValuePriority = 100;
 
 	int viewSize;

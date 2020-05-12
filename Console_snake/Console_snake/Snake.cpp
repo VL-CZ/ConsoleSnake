@@ -53,15 +53,27 @@ void AISnake::move()
 
 	int max_priority = INT32_MIN;
 
+	// get max priority
 	for (auto p : priorities)
 	{
 		if (p.second > max_priority)
-		{
 			max_priority = p.second;
-			direction = p.first;
+	}
+
+	vector<Direction> max_priorities;
+
+	// get all directions with max priority
+	for(auto p : priorities)
+	{
+		if (p.second == max_priority)
+		{
+			max_priorities.push_back(p.first);
 		}
 	}
 
+	int randomInt = rand() % max_priorities.size();
+
+	direction = max_priorities[randomInt];
 	executeMove();
 }
 
@@ -70,7 +82,7 @@ std::map<Direction, int> AISnake::getPriorities()
 	auto mapSquare = map->getSquare(headPosition, viewSize);
 
 	auto priorityMap = vector<vector<int>>();
-	
+
 	// init priority map
 	for (int i = 0; i < viewSize; i++)
 	{
@@ -82,16 +94,44 @@ std::map<Direction, int> AISnake::getPriorities()
 		priorityMap.push_back(row);
 	}
 
+	MapPosition centerSquarePosition(viewSize / 2, viewSize / 2);
 	for (int i = 0; i < viewSize; i++)
 	{
 		for (int j = 0; j < viewSize; j++)
 		{
+			if (i == viewSize / 2 && j == viewSize / 2)
+				continue;
 
+			MapPosition currentPosition(i, j);
+			auto c = mapSquare->getCellAtPosition(currentPosition);
+
+
+			// obstacle or snake body cell
+			if (dynamic_pointer_cast<ObstacleCell>(c) != NULL || dynamic_pointer_cast<SnakeBodyCell>(c) != NULL)
+			{
+				priorityMap[currentPosition.row][currentPosition.column] += wallOrSnakePriority;
+			}
+			// snake head
+			else if (dynamic_pointer_cast<SnakeHeadCell>(c) != NULL)
+			{
+				priorityMap[currentPosition.row][currentPosition.column] += anotherSnakeHeadPriority;
+			}
+			else if (dynamic_pointer_cast<ValueCell>(c) != NULL)
+			{
+				auto valueCell = dynamic_pointer_cast<ValueCell>(c);
+				priorityMap[currentPosition.row][currentPosition.column] += valueCell->getValue() * oneValuePriority;
+			}
 		}
 	}
 
+	int crow = centerSquarePosition.row;
+	int ccol = centerSquarePosition.column;
+
 	auto priorites = std::map<Direction, int>();
-	priorites.insert(make_pair<Direction, int>(Direction::Left, 5));
+	priorites[Direction::Left] = priorityMap[crow][ccol - 1];
+	priorites[Direction::Right] = priorityMap[crow][ccol + 1];
+	priorites[Direction::Up] = priorityMap[crow - 1][ccol];
+	priorites[Direction::Down] = priorityMap[crow + 1][ccol];
 	return priorites;
 }
 
