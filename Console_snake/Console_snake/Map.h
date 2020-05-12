@@ -20,7 +20,7 @@ public:
 	std::shared_ptr<BaseCell> getCellAtPosition(MapPosition position);
 	void setCellAtPosition(MapPosition position, std::shared_ptr<BaseCell> cell);
 	bool tryGetValue(MapPosition position, int& value);
-	std::vector<std::vector<std::shared_ptr<BaseCell>>> getSquare(MapPosition centralPosition, int squareSize);
+	std::shared_ptr<Map> getSquare(MapPosition centralPosition, int squareSize);
 private:
 	int height;
 	int width;

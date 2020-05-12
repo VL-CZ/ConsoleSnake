@@ -54,9 +54,13 @@ class AISnake : public BaseSnake
 	virtual void move() override;
 
 private:
+	const int anotherSnakeHeadPriority = INT32_MIN;
+	const int wallOrSnakePriority = INT32_MIN / 2;
+	const int oneValuePriority = 100;
+
 	int viewSize;
 
-	std::map<Direction,int> getPriorities();
+	std::map<Direction, int> getPriorities();
 public:
 	AISnake(std::string name, MapPosition position, Direction direction, std::shared_ptr<Map> map, int viewSize = 5);
 };

@@ -71,6 +71,7 @@ std::map<Direction, int> AISnake::getPriorities()
 
 	auto priorityMap = vector<vector<int>>();
 	
+	// init priority map
 	for (int i = 0; i < viewSize; i++)
 	{
 		auto row = vector<int>();
@@ -79,6 +80,14 @@ std::map<Direction, int> AISnake::getPriorities()
 			row.push_back(0);
 		}
 		priorityMap.push_back(row);
+	}
+
+	for (int i = 0; i < viewSize; i++)
+	{
+		for (int j = 0; j < viewSize; j++)
+		{
+
+		}
 	}
 
 	auto priorites = std::map<Direction, int>();

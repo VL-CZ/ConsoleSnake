@@ -21,6 +21,8 @@ Map::Map(int height, int width, float obstacleProportion)
 	generateObstacles(obstacleProportion);
 }
 
+#pragma region Getters
+
 int Map::getHeight()
 {
 	return height;
@@ -35,6 +37,8 @@ int Map::getCellCount()
 {
 	return width * height;
 }
+
+#pragma endregion
 
 void Map::print()
 {
@@ -92,7 +96,7 @@ bool Map::tryGetValue(MapPosition position, int& value)
 	}
 }
 
-std::vector<std::vector<std::shared_ptr<BaseCell>>> Map::getSquare(MapPosition centralPosition, int squareSize)
+std::shared_ptr<Map> Map::getSquare(MapPosition centralPosition, int squareSize)
 {
 	int upperBound = squareSize / 2;
 	int lowerBound = (-1) * upperBound;
@@ -110,14 +114,17 @@ std::vector<std::vector<std::shared_ptr<BaseCell>>> Map::getSquare(MapPosition c
 			{
 				row.push_back(getCellAtPosition(currentPosition));
 			}
-			else 
+			else
 			{
 				row.push_back(make_shared<ObstacleCell>());
 			}
 		}
 		cutMap.push_back(row);
 	}
-	return cutMap;
+
+	auto mapSquare = make_shared<Map>(squareSize, squareSize, 0);
+	mapSquare->cells = cutMap;
+	return mapSquare;
 }
 
 void Map::generateObstacles(float obstacleProportion)
