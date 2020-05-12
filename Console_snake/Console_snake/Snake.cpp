@@ -1,4 +1,5 @@
 #include "Snake.h"
+#include "Cell.h"
 #include <conio.h>
 #include <memory>
 using namespace std;
@@ -48,14 +49,47 @@ void UserSnake::tryToChangeDirection()
 
 void AISnake::move()
 {
-	this->direction = Direction::Left;
+	auto priorities = getPriorities();
+
+	int max_priority = INT32_MIN;
+
+	for (auto p : priorities)
+	{
+		if (p.second > max_priority)
+		{
+			max_priority = p.second;
+			direction = p.first;
+		}
+	}
 
 	executeMove();
 }
 
-AISnake::AISnake(std::string name, MapPosition position, Direction direction, std::shared_ptr<Map> map) :
-	BaseSnake(name, position, direction, map)
+std::map<Direction, int> AISnake::getPriorities()
 {
+	auto mapSquare = map->getSquare(headPosition, viewSize);
+
+	auto priorityMap = vector<vector<int>>();
+	
+	for (int i = 0; i < viewSize; i++)
+	{
+		auto row = vector<int>();
+		for (int j = 0; j < viewSize; j++)
+		{
+			row.push_back(0);
+		}
+		priorityMap.push_back(row);
+	}
+
+	auto priorites = std::map<Direction, int>();
+	priorites.insert(make_pair<Direction, int>(Direction::Left, 5));
+	return priorites;
+}
+
+AISnake::AISnake(std::string name, MapPosition position, Direction direction, std::shared_ptr<Map> map, int viewSize)
+	:BaseSnake(name, position, direction, map)
+{
+	this->viewSize = viewSize;
 }
 
 #pragma endregion

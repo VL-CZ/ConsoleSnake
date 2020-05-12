@@ -6,6 +6,7 @@
 #include "Map.h"
 #include "MapCoordinates.h"
 #include <queue>
+#include <map>
 
 class BaseSnake
 {
@@ -52,6 +53,10 @@ class AISnake : public BaseSnake
 	// Inherited via BaseSnake
 	virtual void move() override;
 
+private:
+	int viewSize;
+
+	std::map<Direction,int> getPriorities();
 public:
-	AISnake(std::string name, MapPosition position, Direction direction, std::shared_ptr<Map> map);
+	AISnake(std::string name, MapPosition position, Direction direction, std::shared_ptr<Map> map, int viewSize = 5);
 };

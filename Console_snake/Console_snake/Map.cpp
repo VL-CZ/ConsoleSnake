@@ -86,10 +86,38 @@ bool Map::tryGetValue(MapPosition position, int& value)
 		value = valueCell->getValue();
 		return true;
 	}
-	else 
+	else
 	{
 		return false;
 	}
+}
+
+std::vector<std::vector<std::shared_ptr<BaseCell>>> Map::getSquare(MapPosition centralPosition, int squareSize)
+{
+	int upperBound = squareSize / 2;
+	int lowerBound = (-1) * upperBound;
+
+	auto cutMap = vector<vector<shared_ptr<BaseCell>>>();
+
+	for (int i = lowerBound; i <= upperBound; i++)
+	{
+		auto row = vector<shared_ptr<BaseCell>>();
+		for (int j = lowerBound; j <= upperBound; j++)
+		{
+			MapPosition currentPosition(centralPosition.row + i, centralPosition.column + j);
+
+			if (isInMap(currentPosition))
+			{
+				row.push_back(getCellAtPosition(currentPosition));
+			}
+			else 
+			{
+				row.push_back(make_shared<ObstacleCell>());
+			}
+		}
+		cutMap.push_back(row);
+	}
+	return cutMap;
 }
 
 void Map::generateObstacles(float obstacleProportion)
@@ -126,4 +154,9 @@ bool Map::isEmpty(int row, int column)
 {
 	return dynamic_pointer_cast<EmptyCell>(cells[row][column]) != NULL ||
 		dynamic_pointer_cast<ValueCell>(cells[row][column]) != NULL;
+}
+
+bool Map::isInMap(MapPosition position)
+{
+	return position.row >= 0 && position.row < height&& position.column >= 0 && position.column < width;
 }

@@ -20,6 +20,7 @@ public:
 	std::shared_ptr<BaseCell> getCellAtPosition(MapPosition position);
 	void setCellAtPosition(MapPosition position, std::shared_ptr<BaseCell> cell);
 	bool tryGetValue(MapPosition position, int& value);
+	std::vector<std::vector<std::shared_ptr<BaseCell>>> getSquare(MapPosition centralPosition, int squareSize);
 private:
 	int height;
 	int width;
@@ -27,5 +28,6 @@ private:
 	
 	void generateObstacles(float obstacleProportion);
 	bool isEmpty(int row, int column);
+	bool isInMap(MapPosition position);
 };
 
