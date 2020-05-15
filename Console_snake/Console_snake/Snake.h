@@ -30,6 +30,8 @@ protected:
 private:
 	std::string name;
 	bool alive;
+
+	void die();
 };
 
 class UserSnake : public BaseSnake

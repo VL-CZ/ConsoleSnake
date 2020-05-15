@@ -59,12 +59,15 @@ void Game::initialize()
 
 	map = make_shared<Map>(boardHeight, boardWidth, 0.1);
 
-	shared_ptr<BaseSnake> userSnake = make_shared<UserSnake>("User", MapPosition(10, 10), Direction::Left, map);
+	Direction d = getRandomDirection();
+
+	shared_ptr<BaseSnake> userSnake = make_shared<UserSnake>("User", map->getValidStartPosition(d), d, map);
 	snakes.push_back(userSnake);
 
 	for (int i = 0; i < AI_snakesCount; i++)
 	{
-		shared_ptr<AISnake> ai_snake = make_shared<AISnake>("Bot " + to_string(i), MapPosition(11, 10), Direction::Left, map);
+		Direction d = getRandomDirection();
+		shared_ptr<AISnake> ai_snake = make_shared<AISnake>("Bot " + to_string(i), map->getValidStartPosition(d), d, map);
 		snakes.push_back(ai_snake);
 	}
 }
@@ -77,4 +80,10 @@ void Game::printSummary()
 	{
 		cout << snake->getPoints() << " | " << snake->getName() << endl;
 	}
+}
+
+Direction getRandomDirection()
+{
+	int rn = rand() % 4;
+	return (Direction)rn;
 }

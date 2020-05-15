@@ -2,6 +2,7 @@
 #include<iostream>
 #include "Map.h"
 #include "Snake.h"
+#include "Direction.h"
 class Game
 {
 public:
@@ -18,3 +19,5 @@ private:
 	void printSummary();
 };
 
+// FUNCTIONS:
+Direction getRandomDirection();

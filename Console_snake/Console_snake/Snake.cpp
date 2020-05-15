@@ -220,7 +220,18 @@ void BaseSnake::executeMove()
 	}
 	else
 	{
-		alive = false;
+		die();
+	}
+}
+
+void BaseSnake::die()
+{
+	alive = false;
+	while (!cells.empty())
+	{
+		MapPosition mp = cells.front();
+		cells.pop();
+		map->setCellAtPosition(mp, make_shared<ValueCell>(9));
 	}
 }
 

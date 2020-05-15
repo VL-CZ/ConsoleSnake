@@ -82,6 +82,35 @@ void Map::setCellAtPosition(MapPosition position, std::shared_ptr<BaseCell> cell
 	cells[position.row][position.column] = cell;
 }
 
+std::shared_ptr<BaseCell> Map::getAdjacentCell(MapPosition position, Direction direction)
+{
+	try
+	{
+		MapPosition mp = position;
+		switch (direction)
+		{
+		case Direction::Left:
+			mp = MapPosition(mp.row, mp.column - 1);
+			break;
+		case Direction::Right:
+			mp = MapPosition(mp.row, mp.column + 1);
+			break;
+		case Direction::Up:
+			mp = MapPosition(mp.row - 1, mp.column);
+			break;
+		case Direction::Down:
+			mp = MapPosition(mp.row + 1, mp.column);
+			break;
+		}
+
+		return getCellAtPosition(mp);
+	}
+	catch (exception e)
+	{
+		return NULL;
+	}
+}
+
 bool Map::tryGetValue(MapPosition position, int& value)
 {
 	auto valueCell = dynamic_pointer_cast<ValueCell>(getCellAtPosition(position));
@@ -125,6 +154,29 @@ std::shared_ptr<Map> Map::getSquare(MapPosition centralPosition, int squareSize)
 	auto mapSquare = make_shared<Map>(squareSize, squareSize, 0);
 	mapSquare->cells = cutMap;
 	return mapSquare;
+}
+
+MapPosition Map::getValidStartPosition(Direction snakeHeadDirection)
+{
+	bool isValid = false;
+
+	while (isValid == false)
+	{
+		int row = rand() % height;
+		int col = rand() % width;
+		MapPosition mp = MapPosition(row, col);
+
+		if (isGoodStartPosition(mp, snakeHeadDirection))
+			return mp;
+	}
+}
+
+bool Map::isGoodStartPosition(MapPosition mp, Direction headDirection)
+{
+	auto p1 = mp.AddDirection(headDirection);
+	auto p2 = p1.AddDirection(headDirection);
+
+	return isEmpty(p1) && isEmpty(p2);
 }
 
 void Map::generateObstacles(float obstacleProportion)
