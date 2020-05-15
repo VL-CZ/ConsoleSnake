@@ -20,4 +20,5 @@ private:
 };
 
 // FUNCTIONS:
+
 Direction getRandomDirection();

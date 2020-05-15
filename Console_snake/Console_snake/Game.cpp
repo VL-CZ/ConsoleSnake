@@ -57,7 +57,7 @@ void Game::initialize()
 	cout << "Zadejte pocet hadu ovladanych pocitacem" << endl;
 	cin >> AI_snakesCount;
 
-	map = make_shared<Map>(boardHeight, boardWidth, 0.1);
+	map = make_shared<Map>(boardHeight, boardWidth, 0.05);
 
 	Direction d = getRandomDirection();
 
@@ -81,6 +81,7 @@ void Game::printSummary()
 		cout << snake->getPoints() << " | " << snake->getName() << endl;
 	}
 }
+
 
 Direction getRandomDirection()
 {

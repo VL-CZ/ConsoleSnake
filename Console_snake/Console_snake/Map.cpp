@@ -175,8 +175,9 @@ bool Map::isGoodStartPosition(MapPosition mp, Direction headDirection)
 {
 	auto p1 = mp.AddDirection(headDirection);
 	auto p2 = p1.AddDirection(headDirection);
+	auto p3 = p2.AddDirection(headDirection);
 
-	return isEmpty(p1) && isEmpty(p2);
+	return isEmpty(p1) && isEmpty(p2) && isEmpty(p3);
 }
 
 void Map::generateObstacles(float obstacleProportion)
@@ -211,7 +212,7 @@ void Map::generateObstacles(float obstacleProportion)
 
 bool Map::isEmpty(int row, int column)
 {
-	return dynamic_pointer_cast<EmptyCell>(cells[row][column]) != NULL ||
+	return isInMap(MapPosition(row, column)) && dynamic_pointer_cast<EmptyCell>(cells[row][column]) != NULL ||
 		dynamic_pointer_cast<ValueCell>(cells[row][column]) != NULL;
 }
 
