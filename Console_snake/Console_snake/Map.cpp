@@ -67,11 +67,6 @@ void Map::tryGenerateRandomValueCell()
 	cells[row][column] = make_shared<ValueCell>(value);
 }
 
-bool Map::isEmpty(MapPosition position)
-{
-	return isEmpty(position.row, position.column);
-}
-
 std::shared_ptr<BaseCell> Map::getCellAtPosition(MapPosition position)
 {
 	return cells[position.row][position.column];
@@ -176,8 +171,9 @@ bool Map::isGoodStartPosition(MapPosition mp, Direction headDirection)
 	auto p1 = mp.AddDirection(headDirection);
 	auto p2 = p1.AddDirection(headDirection);
 	auto p3 = p2.AddDirection(headDirection);
+	auto tail = mp.AddDirection(getOppositeDirection(headDirection));
 
-	return isEmpty(p1) && isEmpty(p2) && isEmpty(p3);
+	return isEmpty(mp) && isEmpty(p1) && isEmpty(p2) && isEmpty(p3) && isEmpty(tail);
 }
 
 void Map::generateObstacles(float obstacleProportion)
@@ -208,6 +204,11 @@ void Map::generateObstacles(float obstacleProportion)
 			cells[row][column] = make_shared<ObstacleCell>();
 		}
 	}
+}
+
+bool Map::isEmpty(MapPosition position)
+{
+	return isEmpty(position.row, position.column);
 }
 
 bool Map::isEmpty(int row, int column)
