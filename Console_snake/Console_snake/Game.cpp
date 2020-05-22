@@ -18,6 +18,7 @@ void Game::update()
 {
 	system("cls");
 
+	// try to generate random value cell
 	int rn = rand() % 5;
 	if (rn == 0)
 	{
@@ -26,6 +27,7 @@ void Game::update()
 
 	bool activeSnakes = 0;
 
+	// move
 	for (auto x : snakes)
 	{
 		if (x->isAlive())

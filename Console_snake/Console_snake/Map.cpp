@@ -7,6 +7,7 @@ Map::Map(int height, int width, float obstacleProportion)
 	this->height = height;
 	this->width = width;
 
+	// init cells
 	for (int i = 0; i < height; i++)
 	{
 		vector<shared_ptr<BaseCell>> row;
@@ -106,6 +107,31 @@ std::shared_ptr<BaseCell> Map::getAdjacentCell(MapPosition position, Direction d
 	}
 }
 
+std::set<MapPosition> Map::getAdjacentCellPositions(MapPosition position)
+{
+	auto adjacentCells = set<MapPosition>();
+
+	int crow = position.row;
+	int ccol = position.column;
+
+	for (int i = -1; i <= 1; i++)
+	{
+		for (int j = -1; j <= 1; j++)
+		{
+			if (i == 0 && j == 0)
+				continue;
+
+			MapPosition mp = MapPosition(crow + i, ccol + j);
+			if (isInMap(mp))
+			{
+				adjacentCells.insert(mp);
+			}
+		}
+	}
+
+	return adjacentCells;
+}
+
 bool Map::tryGetValue(MapPosition position, int& value)
 {
 	auto valueCell = dynamic_pointer_cast<ValueCell>(getCellAtPosition(position));
@@ -140,6 +166,7 @@ std::shared_ptr<Map> Map::getSquare(MapPosition centralPosition, int squareSize)
 			}
 			else
 			{
+				// we are out of map
 				row.push_back(make_shared<ObstacleCell>());
 			}
 		}
@@ -194,6 +221,7 @@ void Map::generateObstacles(float obstacleProportion)
 
 	srand(time(NULL));
 
+	// randomly generate some obstacles
 	for (int i = 0; i < totalObstacles; i++)
 	{
 		int row = rand() % height;

@@ -63,6 +63,7 @@ private:
 	int viewSize;
 
 	std::map<Direction, int> getPriorities();
+	void addAdjacentCellsPriorities(std::vector<std::vector<int>> priorityMap, MapPosition centerCell, int centerPriority);
 public:
 	AISnake(std::string name, MapPosition position, Direction direction, std::shared_ptr<Map> map, int viewSize = 5);
 };

@@ -1,4 +1,5 @@
 #include "Direction.h"
+using namespace std;
 
 Direction getOppositeDirection(Direction d)
 {

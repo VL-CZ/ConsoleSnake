@@ -63,7 +63,7 @@ void AISnake::move()
 	vector<Direction> max_priorities;
 
 	// get all directions with max priority
-	for(auto p : priorities)
+	for (auto p : priorities)
 	{
 		if (p.second == max_priority)
 		{
@@ -110,16 +110,20 @@ std::map<Direction, int> AISnake::getPriorities()
 			if (dynamic_pointer_cast<ObstacleCell>(c) != NULL || dynamic_pointer_cast<SnakeBodyCell>(c) != NULL)
 			{
 				priorityMap[currentPosition.row][currentPosition.column] += wallOrSnakePriority;
+				addAdjacentCellsPriorities(priorityMap, currentPosition, wallOrSnakePriority);
 			}
 			// snake head
 			else if (dynamic_pointer_cast<SnakeHeadCell>(c) != NULL)
 			{
 				priorityMap[currentPosition.row][currentPosition.column] += anotherSnakeHeadPriority;
+				addAdjacentCellsPriorities(priorityMap, currentPosition, anotherSnakeHeadPriority);
 			}
 			else if (dynamic_pointer_cast<ValueCell>(c) != NULL)
 			{
 				auto valueCell = dynamic_pointer_cast<ValueCell>(c);
-				priorityMap[currentPosition.row][currentPosition.column] += valueCell->getValue() * oneValuePriority;
+				int priority = valueCell->getValue() * oneValuePriority;
+				priorityMap[currentPosition.row][currentPosition.column] += priority;
+				addAdjacentCellsPriorities(priorityMap, currentPosition, priority);
 			}
 		}
 	}
@@ -133,6 +137,17 @@ std::map<Direction, int> AISnake::getPriorities()
 	priorites[Direction::Up] = priorityMap[crow - 1][ccol];
 	priorites[Direction::Down] = priorityMap[crow + 1][ccol];
 	return priorites;
+}
+
+void AISnake::addAdjacentCellsPriorities(std::vector<std::vector<int>> priorityMap, MapPosition centerCell, int centerCellPriority)
+{
+	auto adjacentCells = map->getAdjacentCellPositions(centerCell);
+
+
+	for (auto c : adjacentCells)
+	{
+		priorityMap[c.row][c.column] += centerCellPriority / 2;
+	}
 }
 
 AISnake::AISnake(std::string name, MapPosition position, Direction direction, std::shared_ptr<Map> map, int viewSize)
@@ -149,10 +164,11 @@ BaseSnake::BaseSnake(std::string name, MapPosition position, Direction direction
 	name(name), points(0), direction(direction), headPosition(position), map(map), alive(true)
 {
 	cells.push(headPosition);
+	
+	// place snake at position
 	auto headCell = make_shared<UserSnakeHeadCell>();
 	map->setCellAtPosition(headPosition, headCell);
 
-	// test
 	MapPosition bodyPosition(headPosition.row, headPosition.column + 1);
 	cells.push(bodyPosition);
 	auto bodyCell = make_shared<SnakeBodyCell>();
@@ -193,6 +209,7 @@ void BaseSnake::executeMove()
 		break;
 	}
 
+	// execute move to position
 	if (map->isEmpty(newPosition))
 	{
 		auto body = make_shared<SnakeBodyCell>();
@@ -207,6 +224,7 @@ void BaseSnake::executeMove()
 		headPosition = newPosition;
 		cells.push(headPosition);
 
+		// update points
 		if (!hasValue)
 		{
 			auto emptyCell = make_shared<EmptyCell>();

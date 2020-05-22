@@ -4,6 +4,7 @@
 #include "Cell.h"
 #include "MapCoordinates.h"
 #include "Direction.h"
+#include <set>
 
 class Map
 {
@@ -21,6 +22,7 @@ public:
 	std::shared_ptr<BaseCell> getCellAtPosition(MapPosition position);
 	void setCellAtPosition(MapPosition position, std::shared_ptr<BaseCell> cell);
 	std::shared_ptr<BaseCell> getAdjacentCell(MapPosition position, Direction direction);
+	std::set<MapPosition> getAdjacentCellPositions(MapPosition position);
 	bool tryGetValue(MapPosition position, int& value);
 	std::shared_ptr<Map> getSquare(MapPosition centralPosition, int squareSize);
 	MapPosition getValidStartPosition(Direction snakeHeadDirection);
