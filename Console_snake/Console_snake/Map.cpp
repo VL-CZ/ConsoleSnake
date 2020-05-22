@@ -107,25 +107,19 @@ std::shared_ptr<BaseCell> Map::getAdjacentCell(MapPosition position, Direction d
 	}
 }
 
-std::set<MapPosition> Map::getAdjacentCellPositions(MapPosition position)
+std::vector<MapPosition> Map::getAdjacentCellPositions(MapPosition position)
 {
-	auto adjacentCells = set<MapPosition>();
+	auto adjacentCells = vector<MapPosition>();
 
 	int crow = position.row;
 	int ccol = position.column;
 
-	for (int i = -1; i <= 1; i++)
+	for (auto d : getAllDirections())
 	{
-		for (int j = -1; j <= 1; j++)
+		MapPosition mp = position.AddDirection(d);
+		if (isInMap(mp))
 		{
-			if (i == 0 && j == 0)
-				continue;
-
-			MapPosition mp = MapPosition(crow + i, ccol + j);
-			if (isInMap(mp))
-			{
-				adjacentCells.insert(mp);
-			}
+			adjacentCells.push_back(mp);
 		}
 	}
 

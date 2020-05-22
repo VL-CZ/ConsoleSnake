@@ -110,20 +110,20 @@ std::map<Direction, int> AISnake::getPriorities()
 			if (dynamic_pointer_cast<ObstacleCell>(c) != NULL || dynamic_pointer_cast<SnakeBodyCell>(c) != NULL)
 			{
 				priorityMap[currentPosition.row][currentPosition.column] += wallOrSnakePriority;
-				addAdjacentCellsPriorities(priorityMap, currentPosition, wallOrSnakePriority);
+				addAdjacentCellsPriorities(mapSquare,priorityMap, currentPosition, wallOrSnakePriority);
 			}
 			// snake head
 			else if (dynamic_pointer_cast<SnakeHeadCell>(c) != NULL)
 			{
 				priorityMap[currentPosition.row][currentPosition.column] += anotherSnakeHeadPriority;
-				addAdjacentCellsPriorities(priorityMap, currentPosition, anotherSnakeHeadPriority);
+				addAdjacentCellsPriorities(mapSquare, priorityMap, currentPosition, anotherSnakeHeadPriority);
 			}
 			else if (dynamic_pointer_cast<ValueCell>(c) != NULL)
 			{
 				auto valueCell = dynamic_pointer_cast<ValueCell>(c);
 				int priority = valueCell->getValue() * oneValuePriority;
 				priorityMap[currentPosition.row][currentPosition.column] += priority;
-				addAdjacentCellsPriorities(priorityMap, currentPosition, priority);
+				addAdjacentCellsPriorities(mapSquare, priorityMap, currentPosition, priority);
 			}
 		}
 	}
@@ -139,10 +139,9 @@ std::map<Direction, int> AISnake::getPriorities()
 	return priorites;
 }
 
-void AISnake::addAdjacentCellsPriorities(std::vector<std::vector<int>> priorityMap, MapPosition centerCell, int centerCellPriority)
+void AISnake::addAdjacentCellsPriorities(std::shared_ptr<Map> mapSquare,std::vector<std::vector<int>>& priorityMap, MapPosition centerCell, int centerCellPriority)
 {
-	auto adjacentCells = map->getAdjacentCellPositions(centerCell);
-
+	auto adjacentCells = mapSquare->getAdjacentCellPositions(centerCell);
 
 	for (auto c : adjacentCells)
 	{

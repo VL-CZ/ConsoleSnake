@@ -15,3 +15,14 @@ Direction getOppositeDirection(Direction d)
 		return Direction::Up;
 	}
 }
+
+std::vector<Direction> getAllDirections()
+{
+	auto direcitons = std::vector<Direction>();
+	direcitons.push_back(Direction::Left);
+	direcitons.push_back(Direction::Right);
+	direcitons.push_back(Direction::Up);
+	direcitons.push_back(Direction::Down);
+
+	return direcitons;
+}
