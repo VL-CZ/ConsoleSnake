@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <iomanip>
 using namespace std;
 
 Game::Game() : running(true)
@@ -78,12 +79,12 @@ void Game::printSummary()
 {
 	cout << endl << endl << endl;
 
+	sort(snakes.begin(), snakes.end(), SnakePointsComparer());
 	for (auto snake : snakes)
 	{
-		cout << snake->getPoints() << " | " << snake->getName() << endl;
+		cout << setw(6) << snake->getPoints() << " | " << snake->getName() << endl;
 	}
 }
-
 
 Direction getRandomDirection()
 {

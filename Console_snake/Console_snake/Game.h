@@ -1,5 +1,6 @@
 #pragma once
 #include<iostream>
+#include<memory>
 #include "Map.h"
 #include "Snake.h"
 #include "Direction.h"
@@ -19,6 +20,16 @@ private:
 	void printSummary();
 };
 
-// FUNCTIONS:
 
+
+// FUNCTIONS:
 Direction getRandomDirection();
+
+// compare snakes by points descending
+struct SnakePointsComparer
+{
+	bool operator()(const std::shared_ptr<BaseSnake>& x, const std::shared_ptr<BaseSnake>& y)
+	{
+		return x->getPoints() > y->getPoints();
+	}
+};
