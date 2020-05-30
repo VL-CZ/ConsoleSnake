@@ -20,10 +20,21 @@ public:
 	virtual void move() = 0;
 
 protected:
+
 	int points;
+
+	/// <summary>
+	/// current direction
+	/// </summary>
 	Direction direction;
+
+	/// <summary>
+	/// list of snake cell positions
+	/// </summary>
 	std::queue<MapPosition> cells;
+
 	MapPosition headPosition;
+
 	std::shared_ptr<Map> map;
 
 	void executeMove();
@@ -31,6 +42,10 @@ private:
 	std::string name;
 	bool alive;
 
+	/// <summary>
+	/// remove snake from map (replace all its body cells by points with value 9)
+	/// and mark that it's not alive
+	/// </summary>
 	void die();
 };
 
@@ -42,11 +57,15 @@ class UserSnake : public BaseSnake
 public:
 	UserSnake(std::string name, MapPosition position, Direction direction, std::shared_ptr<Map> map);
 private:
+	// keys for movement
 	char moveUpKey = 'w';
 	char moveDownKey = 's';
 	char moveLeftKey = 'a';
 	char moveRightKey = 'd';
 
+	/// <summary>
+	///  
+	/// </summary>
 	void tryToChangeDirection();
 };
 
@@ -56,14 +75,31 @@ class AISnake : public BaseSnake
 	virtual void move() override;
 
 private:
+	// priorities
 	const int anotherSnakeHeadPriority = -150;
 	const int wallOrSnakePriority = -25;
 	const int oneValuePriority = 100;
 
+	/// <summary>
+	/// size of map view
+	/// </summary>
 	int viewSize;
 
+	/// <summary>
+	/// get priority map
+	/// </summary>
+	/// <returns></returns>
 	std::map<Direction, int> getPriorities();
-	void addAdjacentCellsPriorities(std::shared_ptr<Map> mapSquare, std::vector<std::vector<int>>& priorityMap, MapPosition centerCell, int centerPriority);
+
+	/// <summary>
+	/// add priorities of adjacent cells into priorityMap.
+	/// Cells next to centerCell have priority equal to (centerPriority/2)
+	/// </summary>
+	/// <param name="map"></param>
+	/// <param name="priorityMap"></param>
+	/// <param name="centerCell"></param>
+	/// <param name="centerPriority"></param>
+	void addAdjacentCellsPriorities(std::shared_ptr<Map> map, std::vector<std::vector<int>>& priorityMap, MapPosition centerCell, int centerPriority);
 public:
 	AISnake(std::string name, MapPosition position, Direction direction, std::shared_ptr<Map> map, int viewSize = 5);
 };

@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 
+// classes representing different types of cells
+
 class BaseCell 
 {
 public:
@@ -32,7 +34,7 @@ private:
 	int value;
 };
 
-
+// snake cells
 
 class SnakeBodyCell : public BaseCell 
 {

@@ -9,14 +9,28 @@ class Game
 public:
 	Game();
 
+	/// <summary>
+	/// start the game
+	/// </summary>
 	void play();
 private:
+	/// <summary>
+	/// is game in progess?
+	/// </summary>
 	bool running;
 	std::shared_ptr<Map> map;
 	std::vector<std::shared_ptr<BaseSnake>> snakes;
 
+	/// <summary>
+	/// execute move of all snakes
+	/// </summary>
 	void update();
+
 	void initialize();
+
+	/// <summary>
+	/// print snake points
+	/// </summary>
 	void printSummary();
 };
 
