@@ -1,6 +1,7 @@
 #pragma once
 #include<iostream>
 #include<memory>
+#include<Windows.h>
 #include "Map.h"
 #include "Snake.h"
 #include "Direction.h"
@@ -17,7 +18,15 @@ private:
 	/// <summary>
 	/// is game in progess?
 	/// </summary>
-	bool running;
+	bool inProgress;
+
+	/// <summary>
+	/// console output
+	/// </summary>
+	const HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+
+
+
 	std::shared_ptr<Map> map;
 	std::vector<std::shared_ptr<BaseSnake>> snakes;
 

@@ -2,14 +2,14 @@
 #include <iomanip>
 using namespace std;
 
-Game::Game() : running(true)
+Game::Game() : inProgress(true)
 {
 }
 
 void Game::play()
 {
 	initialize();
-	while (running)
+	while (inProgress)
 	{
 		update();
 	}
@@ -17,7 +17,8 @@ void Game::play()
 
 void Game::update()
 {
-	system("cls");
+	Sleep(100);
+	SetConsoleCursorPosition(console, { 0,0 });
 
 	// try to generate random value cell
 	int rn = rand() % 5;
@@ -39,7 +40,7 @@ void Game::update()
 	}
 
 	if (activeSnakes == 0)
-		running = false;
+		inProgress = false;
 
 	map->print();
 	printSummary();
@@ -82,7 +83,10 @@ void Game::printSummary()
 	sort(snakes.begin(), snakes.end(), SnakePointsComparer());
 	for (auto snake : snakes)
 	{
-		cout << setw(6) << snake->getPoints() << " | " << snake->getName() << endl;
+		string aliveString = snake->isAlive() ? "A" : "D" ;
+		cout << setw(6) << snake->getPoints() << 
+			" | " << aliveString << 
+			" | " << snake->getName() << endl;
 	}
 }
 

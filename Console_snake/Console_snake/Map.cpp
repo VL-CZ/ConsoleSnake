@@ -235,8 +235,9 @@ bool Map::isEmpty(MapPosition position)
 
 bool Map::isEmpty(int row, int column)
 {
-	return isInMap(MapPosition(row, column)) && dynamic_pointer_cast<EmptyCell>(cells[row][column]) != NULL ||
-		dynamic_pointer_cast<ValueCell>(cells[row][column]) != NULL;
+	return isInMap(MapPosition(row, column)) && // it's in map
+		(dynamic_pointer_cast<EmptyCell>(cells[row][column]) != NULL || // and it's either empty cell or cell with value
+		dynamic_pointer_cast<ValueCell>(cells[row][column]) != NULL);
 }
 
 bool Map::isInMap(MapPosition position)

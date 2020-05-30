@@ -1,5 +1,9 @@
 #pragma once
 #include "Direction.h"
+
+/// <summary>
+/// struct representing position (row, column) in the map
+/// </summary>
 struct MapPosition
 {
 	int row;
