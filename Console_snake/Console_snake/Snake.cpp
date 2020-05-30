@@ -168,7 +168,7 @@ BaseSnake::BaseSnake(std::string name, MapPosition position, Direction direction
 	auto headCell = make_shared<UserSnakeHeadCell>();
 	map->setCellAtPosition(headPosition, headCell);
 
-	MapPosition bodyPosition(headPosition.row, headPosition.column + 1);
+	MapPosition bodyPosition = headPosition.AddDirection(getOppositeDirection(direction));
 	cells.push(bodyPosition);
 	auto bodyCell = make_shared<SnakeBodyCell>();
 	map->setCellAtPosition(bodyPosition, bodyCell);

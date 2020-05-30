@@ -25,8 +25,6 @@ private:
 	/// </summary>
 	const HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 
-
-
 	std::shared_ptr<Map> map;
 	std::vector<std::shared_ptr<BaseSnake>> snakes;
 

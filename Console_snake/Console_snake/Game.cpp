@@ -74,6 +74,8 @@ void Game::initialize()
 		shared_ptr<AISnake> ai_snake = make_shared<AISnake>("Bot " + to_string(i), map->getValidStartPosition(d), d, map);
 		snakes.push_back(ai_snake);
 	}
+
+	system("cls");
 }
 
 void Game::printSummary()
