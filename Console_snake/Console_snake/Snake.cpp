@@ -27,22 +27,29 @@ void UserSnake::tryToChangeDirection()
 	if (_kbhit())
 	{
 		char pressedKey = _getch();
+		Direction d;
 
 		if (pressedKey == moveUpKey)
 		{
-			direction = Direction::Up;
+			d = Direction::Up;
 		}
 		else if (pressedKey == moveLeftKey)
 		{
-			direction = Direction::Left;
+			d = Direction::Left;
 		}
 		else if (pressedKey == moveDownKey)
 		{
-			direction = Direction::Down;
+			d = Direction::Down;
 		}
 		else if (pressedKey == moveRightKey)
 		{
-			direction = Direction::Right;
+			d = Direction::Right;
+		}
+
+		// cannot move backwards
+		if (d != getOppositeDirection(direction))
+		{
+			direction = d;
 		}
 	}
 }
@@ -114,7 +121,6 @@ std::map<Direction, int> AISnake::getPriorities()
 			MapPosition currentPosition(i, j);
 			auto c = mapSquare->getCellAtPosition(currentPosition);
 
-
 			// obstacle or snake body cell
 			if (dynamic_pointer_cast<ObstacleCell>(c) != NULL || dynamic_pointer_cast<SnakeBodyCell>(c) != NULL)
 			{
@@ -127,6 +133,7 @@ std::map<Direction, int> AISnake::getPriorities()
 				priorityMap[currentPosition.row][currentPosition.column] += anotherSnakeHeadPriority;
 				addAdjacentCellsPriorities(mapSquare, priorityMap, currentPosition, anotherSnakeHeadPriority);
 			}
+			// value cell
 			else if (dynamic_pointer_cast<ValueCell>(c) != NULL)
 			{
 				auto valueCell = dynamic_pointer_cast<ValueCell>(c);

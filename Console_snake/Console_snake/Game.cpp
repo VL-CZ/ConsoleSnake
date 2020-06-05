@@ -17,6 +17,9 @@ void Game::play()
 	{
 		update();
 	}
+
+	cout << endl;
+	cout << "Winner: " << snakes[0]->getName() << endl;
 }
 
 void Game::update()
@@ -39,6 +42,10 @@ void Game::update()
 	}
 
 	if (activeSnakes == 0)
+		inProgress = false;
+
+	// if there is only one snake left and has the most points (and it's not a singleplayer mode)
+	else if (activeSnakes == 1 && snakes[0]->isAlive() && snakes.size() > 1 && snakes[0]->getPoints() > snakes[1]->getPoints())
 		inProgress = false;
 
 	map->print();
@@ -80,15 +87,14 @@ void Game::initialize()
 void Game::printSummary()
 {
 	cout << endl << endl << endl;
+	printInColumns("Name", "Score", "State");
+	cout << endl;
 
 	sort(snakes.begin(), snakes.end(), SnakePointsComparer());
 	for (auto snake : snakes)
 	{
 		string aliveString = snake->isAlive() ? "Alive" : "Dead";
-
-		cout << setw(10) << snake->getName() << " | ";
-		cout << setw(5) << snake->getPoints() << " | ";
-		cout << setw(6) << aliveString << endl;
+		printInColumns(snake->getName(), to_string(snake->getPoints()), aliveString);
 	}
 }
 
@@ -113,4 +119,11 @@ Direction getRandomDirection()
 {
 	int rn = rand() % 4;
 	return (Direction)rn;
+}
+
+void printInColumns(std::string name, std::string points, std::string alive)
+{
+	cout << setw(10) << name << " | ";
+	cout << setw(5) << points << " | ";
+	cout << setw(6) << alive << endl;
 }

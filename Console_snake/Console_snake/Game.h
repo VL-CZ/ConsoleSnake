@@ -59,6 +59,8 @@ private:
 // FUNCTIONS:
 Direction getRandomDirection();
 
+void printInColumns(std::string name, std::string points, std::string alive);
+
 // compare snakes by points descending
 struct SnakePointsComparer
 {
