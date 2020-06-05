@@ -46,6 +46,12 @@ private:
 	/// print snake points
 	/// </summary>
 	void printSummary();
+
+	/// <summary>
+	/// try to generate random value cell in map
+	/// </summary>
+	/// <param name="probability">probability of generating value cell (e.g. 0.25 ~ 25 %)</param>
+	void tryToGenerateValueInMap(double probability);
 };
 
 

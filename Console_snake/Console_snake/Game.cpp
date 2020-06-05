@@ -24,12 +24,7 @@ void Game::update()
 	Sleep(100);
 	SetConsoleCursorPosition(console, { 0,0 });
 
-	// try to generate random value cell
-	int rn = rand() % 5;
-	if (rn == 0)
-	{
-		map->tryGenerateRandomValueCell();
-	}
+	tryToGenerateValueInMap(0.2);
 
 	bool activeSnakes = 0;
 
@@ -89,10 +84,28 @@ void Game::printSummary()
 	sort(snakes.begin(), snakes.end(), SnakePointsComparer());
 	for (auto snake : snakes)
 	{
-		string aliveString = snake->isAlive() ? "A" : "D" ;
-		cout << setw(6) << snake->getPoints() << 
-			" | " << aliveString << 
-			" | " << snake->getName() << endl;
+		string aliveString = snake->isAlive() ? "Alive" : "Dead";
+
+		cout << setw(10) << snake->getName() << " | ";
+		cout << setw(5) << snake->getPoints() << " | ";
+		cout << setw(6) << aliveString << endl;
+	}
+}
+
+void Game::tryToGenerateValueInMap(double probability)
+{
+	if (probability == 0)
+		return;
+
+	// generate random number 1-100
+	int rn = rand() % 100;
+
+	// get maximal number that indicates success
+	int maxValid = probability * 100 + 1;
+
+	if (rn <= maxValid)
+	{
+		map->tryGenerateRandomValueCell();
 	}
 }
 
