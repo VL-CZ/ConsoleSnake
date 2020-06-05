@@ -9,6 +9,10 @@ Game::Game() : inProgress(true)
 void Game::play()
 {
 	initialize();
+
+	map->print();
+	Sleep(1000);
+
 	while (inProgress)
 	{
 		update();

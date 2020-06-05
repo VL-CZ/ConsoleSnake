@@ -25,7 +25,14 @@ private:
 	/// </summary>
 	const HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 
+	/// <summary>
+	/// is this move first move in the game?
+	/// USAGE: before first move freeze the screen for several seconds -> user knows which snake he controls
+	/// </summary>
+	bool isFirstMove = true;
+
 	std::shared_ptr<Map> map;
+
 	std::vector<std::shared_ptr<BaseSnake>> snakes;
 
 	/// <summary>

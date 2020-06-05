@@ -17,7 +17,16 @@ public:
 	std::string getName();
 	bool isAlive();
 
+	/// <summary>
+	/// move the snake
+	/// </summary>
 	virtual void move() = 0;
+
+	/// <summary>
+	/// get new instance of snake head type
+	/// </summary>
+	/// <returns></returns>
+	virtual std::shared_ptr<SnakeHeadCell> getHeadCell() = 0;
 
 protected:
 
@@ -54,6 +63,9 @@ class UserSnake : public BaseSnake
 	// Inherited via BaseSnake
 	virtual void move() override;
 
+	// Inherited via BaseSnake
+	virtual std::shared_ptr<SnakeHeadCell> getHeadCell() override;
+
 public:
 	UserSnake(std::string name, MapPosition position, Direction direction, std::shared_ptr<Map> map);
 private:
@@ -64,7 +76,7 @@ private:
 	char moveRightKey = 'd';
 
 	/// <summary>
-	///  
+	/// change direction if key pressed 
 	/// </summary>
 	void tryToChangeDirection();
 };
@@ -73,6 +85,9 @@ class AISnake : public BaseSnake
 {
 	// Inherited via BaseSnake
 	virtual void move() override;
+
+	// Inherited via BaseSnake
+	virtual std::shared_ptr<SnakeHeadCell> getHeadCell() override;
 
 private:
 	// priorities

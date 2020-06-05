@@ -37,5 +37,5 @@ std::string AISnakeHeadCell::toString()
 
 std::string UserSnakeHeadCell::toString()
 {
-	return "@";
+	return "T";
 }
