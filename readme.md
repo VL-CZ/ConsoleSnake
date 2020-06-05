@@ -1,5 +1,5 @@
 # Programátorská Dokumentace
-Jedná se o konzolovou verzi hry Snake, lze hrát Singleplayer i Multiplayer.\
+Jedná se o konzolovou verzi hry Snake, lze hrát Singleplayer i Multiplayer (proti počítači).\
 Aplikace je napsaná v jazyce C++.
 
 ## Základní princip fungování
