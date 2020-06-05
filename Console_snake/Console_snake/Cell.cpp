@@ -37,5 +37,19 @@ std::string AISnakeHeadCell::toString()
 
 std::string UserSnakeHeadCell::toString()
 {
-	return "T";
+	switch (orientation)
+	{
+	case Direction::Left:
+		return "<";
+	case Direction::Right:
+		return ">";
+	case Direction::Up:
+		return "A";
+	case Direction::Down:
+		return "V";
+	}
+}
+
+UserSnakeHeadCell::UserSnakeHeadCell(Direction d) : orientation(d)
+{
 }

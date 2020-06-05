@@ -17,8 +17,9 @@ UserSnake::UserSnake(std::string name, MapPosition position, Direction direction
 	BaseSnake(name, position, direction, map)
 {
 	// place snake head at position
-	auto headCell = make_shared<UserSnakeHeadCell>();
+	auto headCell = make_shared<UserSnakeHeadCell>(direction);
 	map->setCellAtPosition(headPosition, headCell);
+	cells.push(headPosition);
 }
 
 void UserSnake::tryToChangeDirection()
@@ -46,9 +47,9 @@ void UserSnake::tryToChangeDirection()
 	}
 }
 
-std::shared_ptr<SnakeHeadCell> UserSnake::getHeadCell()
+std::shared_ptr<SnakeHeadCell> UserSnake::getNewHeadCell()
 {
-	return make_shared<UserSnakeHeadCell>();
+	return make_shared<UserSnakeHeadCell>(direction);
 }
 
 #pragma endregion
@@ -165,9 +166,10 @@ AISnake::AISnake(std::string name, MapPosition position, Direction direction, st
 	// place snake head at position
 	auto headCell = make_shared<AISnakeHeadCell>();
 	map->setCellAtPosition(headPosition, headCell);
+	cells.push(headPosition);
 }
 
-std::shared_ptr<SnakeHeadCell> AISnake::getHeadCell()
+std::shared_ptr<SnakeHeadCell> AISnake::getNewHeadCell()
 {
 	return make_shared<AISnakeHeadCell>();
 }
@@ -179,10 +181,7 @@ std::shared_ptr<SnakeHeadCell> AISnake::getHeadCell()
 BaseSnake::BaseSnake(std::string name, MapPosition position, Direction direction, std::shared_ptr<Map> map) :
 	name(name), points(0), direction(direction), headPosition(position), map(map), alive(true)
 {
-	cells.push(headPosition);
-	
 	// place snake body at position
-
 	MapPosition bodyPosition = headPosition.AddDirection(getOppositeDirection(direction));
 	cells.push(bodyPosition);
 	auto bodyCell = make_shared<SnakeBodyCell>();
@@ -227,7 +226,7 @@ void BaseSnake::executeMove()
 	if (map->isEmpty(newPosition))
 	{
 		auto body = make_shared<SnakeBodyCell>();
-		auto head = getHeadCell();
+		auto head = getNewHeadCell();
 
 		int points;
 		bool hasValue = map->tryGetValue(newPosition, points);

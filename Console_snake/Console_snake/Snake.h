@@ -26,7 +26,7 @@ public:
 	/// get new instance of snake head type
 	/// </summary>
 	/// <returns></returns>
-	virtual std::shared_ptr<SnakeHeadCell> getHeadCell() = 0;
+	virtual std::shared_ptr<SnakeHeadCell> getNewHeadCell() = 0;
 
 protected:
 
@@ -64,7 +64,7 @@ class UserSnake : public BaseSnake
 	virtual void move() override;
 
 	// Inherited via BaseSnake
-	virtual std::shared_ptr<SnakeHeadCell> getHeadCell() override;
+	virtual std::shared_ptr<SnakeHeadCell> getNewHeadCell() override;
 
 public:
 	UserSnake(std::string name, MapPosition position, Direction direction, std::shared_ptr<Map> map);
@@ -87,7 +87,7 @@ class AISnake : public BaseSnake
 	virtual void move() override;
 
 	// Inherited via BaseSnake
-	virtual std::shared_ptr<SnakeHeadCell> getHeadCell() override;
+	virtual std::shared_ptr<SnakeHeadCell> getNewHeadCell() override;
 
 private:
 	// priorities

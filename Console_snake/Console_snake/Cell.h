@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "Direction.h"
 
 // classes representing different types of cells
 
@@ -58,4 +59,9 @@ class UserSnakeHeadCell : public SnakeHeadCell
 {
 	// Inherited via SnakeHeadCell
 	virtual std::string toString() override;
+
+public:
+	UserSnakeHeadCell(Direction d);
+private:
+	Direction orientation;
 };
