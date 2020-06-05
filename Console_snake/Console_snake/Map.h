@@ -16,6 +16,9 @@ public:
 	int getWidth();
 	int getCellCount();
 
+	/// <summary>
+	/// print map content
+	/// </summary>
 	void print();
 
 	/// <summary>

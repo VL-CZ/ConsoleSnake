@@ -46,7 +46,9 @@ void Game::update()
 
 	// if there is only one snake left and has the most points (and it's not a singleplayer mode)
 	else if (activeSnakes == 1 && snakes[0]->isAlive() && snakes.size() > 1 && snakes[0]->getPoints() > snakes[1]->getPoints())
+	{
 		inProgress = false;
+	}
 
 	map->print();
 	printSummary();
