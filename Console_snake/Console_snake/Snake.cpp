@@ -2,6 +2,7 @@
 #include "Cell.h"
 #include <conio.h>
 #include <memory>
+#include <unordered_set>
 using namespace std;
 
 #pragma region UserSnake
@@ -125,7 +126,7 @@ std::map<Direction, int> AISnake::getPriorities()
 			if (dynamic_pointer_cast<ObstacleCell>(c) != NULL || dynamic_pointer_cast<SnakeBodyCell>(c) != NULL)
 			{
 				priorityMap[currentPosition.row][currentPosition.column] += wallOrSnakePriority;
-				addAdjacentCellsPriorities(mapSquare,priorityMap, currentPosition, wallOrSnakePriority);
+				addAdjacentCellsPriorities(mapSquare, priorityMap, currentPosition, wallOrSnakePriority);
 			}
 			// snake head
 			else if (dynamic_pointer_cast<SnakeHeadCell>(c) != NULL)
@@ -152,16 +153,46 @@ std::map<Direction, int> AISnake::getPriorities()
 	priorites[Direction::Right] = priorityMap[crow][ccol + 1];
 	priorites[Direction::Up] = priorityMap[crow - 1][ccol];
 	priorites[Direction::Down] = priorityMap[crow + 1][ccol];
+
+	// cannot move back
+	priorites[getOppositeDirection(direction)] = INT32_MIN;
+
 	return priorites;
 }
 
-void AISnake::addAdjacentCellsPriorities(std::shared_ptr<Map> mapSquare,std::vector<std::vector<int>>& priorityMap, MapPosition centerCell, int centerCellPriority)
+void AISnake::addAdjacentCellsPriorities(std::shared_ptr<Map> mapSquare, std::vector<std::vector<int>>& priorityMap, MapPosition centerPosition, int centerCellPriority)
 {
-	auto adjacentCells = mapSquare->getAdjacentCellPositions(centerCell);
+	auto adjacentCells = mapSquare->getAdjacentCellPositions(centerPosition);
+	auto distanceTwoCells = vector<MapPosition>();
 
 	for (auto c : adjacentCells)
 	{
+		// set priority
 		priorityMap[c.row][c.column] += centerCellPriority / 2;
+
+		// get distance two cells
+		auto adjacent = mapSquare->getAdjacentCellPositions(c);
+		for (auto a : adjacent)
+		{
+			distanceTwoCells.push_back(a);
+		}
+	}
+
+	// remove duplicates from distanceTwoCells
+	sort(distanceTwoCells.begin(), distanceTwoCells.end());
+	distanceTwoCells.erase(
+		unique(distanceTwoCells.begin(), distanceTwoCells.end()), 
+		distanceTwoCells.end());
+
+	// remove center position
+	distanceTwoCells.erase(
+		remove(distanceTwoCells.begin(), distanceTwoCells.end(), centerPosition)
+		, distanceTwoCells.end());
+
+	// set distance 2 priority
+	for (auto d : distanceTwoCells)
+	{
+		priorityMap[d.row][d.column] += centerCellPriority / 4;
 	}
 }
 

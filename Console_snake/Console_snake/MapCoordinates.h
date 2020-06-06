@@ -26,5 +26,16 @@ struct MapPosition
 			return MapPosition(row + 1, column);
 		}
 	}
+
+
+	bool operator==(const MapPosition& other)
+	{
+		return row == other.row && column == other.column;
+	}
+
+	bool operator < (const MapPosition& other) const
+	{
+		return (row < other.row  || (row == other.row && column < other.column));
+	}
 };
 

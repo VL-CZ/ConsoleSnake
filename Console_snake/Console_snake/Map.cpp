@@ -192,9 +192,12 @@ bool Map::isGoodStartPosition(MapPosition mp, Direction headDirection)
 	auto p1 = mp.AddDirection(headDirection);
 	auto p2 = p1.AddDirection(headDirection);
 	auto p3 = p2.AddDirection(headDirection);
-	auto tail = mp.AddDirection(getOppositeDirection(headDirection));
+	
+	Direction reversedDirection = getOppositeDirection(headDirection);
+	auto tail = mp.AddDirection(reversedDirection);
+	auto behindTail = tail.AddDirection(reversedDirection);
 
-	return isEmpty(mp) && isEmpty(p1) && isEmpty(p2) && isEmpty(p3) && isEmpty(tail);
+	return isEmpty(mp) && isEmpty(p1) && isEmpty(p2) && isEmpty(p3) && isEmpty(tail) && isEmpty(behindTail);
 }
 
 void Map::generateObstacles(float obstacleProportion)
