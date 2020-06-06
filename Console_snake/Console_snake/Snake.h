@@ -7,6 +7,7 @@
 #include "MapCoordinates.h"
 #include <queue>
 #include <map>
+#include "CellPriorities.h"
 
 class BaseSnake
 {
@@ -90,10 +91,7 @@ class AISnake : public BaseSnake
 	virtual std::shared_ptr<SnakeHeadCell> getNewHeadCell() override;
 
 private:
-	// priorities
-	const int anotherSnakeHeadPriority = -150;
-	const int wallOrSnakePriority = -25;
-	const int oneValuePriority = 100;
+	CellPriorities priorities;
 
 	/// <summary>
 	/// size of map view

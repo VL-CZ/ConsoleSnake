@@ -53,5 +53,8 @@
     <ClInclude Include="MapCoordinates.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CellPriorities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

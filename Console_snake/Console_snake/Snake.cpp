@@ -125,22 +125,22 @@ std::map<Direction, int> AISnake::getPriorities()
 			// obstacle or snake body cell
 			if (dynamic_pointer_cast<ObstacleCell>(c) != NULL || dynamic_pointer_cast<SnakeBodyCell>(c) != NULL)
 			{
-				priorityMap[currentPosition.row][currentPosition.column] += wallOrSnakePriority;
-				addAdjacentCellsPriorities(mapSquare, priorityMap, currentPosition, wallOrSnakePriority);
+				priorityMap[currentPosition.row][currentPosition.column] += priorities.wallOrSnakePriority;
+				addAdjacentCellsPriorities(mapSquare, priorityMap, currentPosition, priorities.nextToWallOrSnakePriority);
 			}
 			// snake head
 			else if (dynamic_pointer_cast<SnakeHeadCell>(c) != NULL)
 			{
-				priorityMap[currentPosition.row][currentPosition.column] += anotherSnakeHeadPriority;
-				addAdjacentCellsPriorities(mapSquare, priorityMap, currentPosition, anotherSnakeHeadPriority);
+				priorityMap[currentPosition.row][currentPosition.column] += priorities.anotherSnakeHeadPriority;
+				addAdjacentCellsPriorities(mapSquare, priorityMap, currentPosition, priorities.nextToAnotherSnakeHeadPriority);
 			}
 			// value cell
 			else if (dynamic_pointer_cast<ValueCell>(c) != NULL)
 			{
 				auto valueCell = dynamic_pointer_cast<ValueCell>(c);
-				int priority = valueCell->getValue() * oneValuePriority;
+				int priority = valueCell->getValue() * priorities.oneValuePriority;
 				priorityMap[currentPosition.row][currentPosition.column] += priority;
-				addAdjacentCellsPriorities(mapSquare, priorityMap, currentPosition, priority);
+				addAdjacentCellsPriorities(mapSquare, priorityMap, currentPosition, valueCell->getValue() * priorities.nextToOneValuePriority);
 			}
 		}
 	}
@@ -160,7 +160,7 @@ std::map<Direction, int> AISnake::getPriorities()
 	return priorites;
 }
 
-void AISnake::addAdjacentCellsPriorities(std::shared_ptr<Map> mapSquare, std::vector<std::vector<int>>& priorityMap, MapPosition centerPosition, int centerCellPriority)
+void AISnake::addAdjacentCellsPriorities(std::shared_ptr<Map> mapSquare, std::vector<std::vector<int>>& priorityMap, MapPosition centerPosition, int adjacentCellPriority)
 {
 	auto adjacentCells = mapSquare->getAdjacentCellPositions(centerPosition);
 	auto distanceTwoCells = vector<MapPosition>();
@@ -168,7 +168,7 @@ void AISnake::addAdjacentCellsPriorities(std::shared_ptr<Map> mapSquare, std::ve
 	for (auto c : adjacentCells)
 	{
 		// set priority
-		priorityMap[c.row][c.column] += centerCellPriority / 2;
+		priorityMap[c.row][c.column] += adjacentCellPriority;
 
 		// get distance two cells
 		auto adjacent = mapSquare->getAdjacentCellPositions(c);
@@ -192,7 +192,7 @@ void AISnake::addAdjacentCellsPriorities(std::shared_ptr<Map> mapSquare, std::ve
 	// set distance 2 priority
 	for (auto d : distanceTwoCells)
 	{
-		priorityMap[d.row][d.column] += centerCellPriority / 4;
+		priorityMap[d.row][d.column] += adjacentCellPriority / 2;
 	}
 }
 
