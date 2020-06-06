@@ -65,11 +65,11 @@ void Game::initialize()
 	int mapWidth;
 	int AI_snakesCount;
 
-	mapHeight = cinNextInteger("Please enter the map height");
+	mapHeight = cinNextInteger("Please enter the map height", 3);
 
-	mapWidth = cinNextInteger("Please enter the map width");
+	mapWidth = cinNextInteger("Please enter the map width", 3);
 
-	AI_snakesCount = cinNextInteger("Please enter the number of AI controlled snakes");
+	AI_snakesCount = cinNextInteger("Please enter the number of AI controlled snakes", 0);
 
 	map = make_shared<Map>(mapHeight, mapWidth, 0.05);
 
@@ -132,7 +132,7 @@ void printInColumns(std::string name, std::string points, std::string alive)
 	cout << setw(6) << alive << endl;
 }
 
-int cinNextInteger(std::string message)
+int cinNextInteger(std::string message, int minValue)
 {
 	int number;
 	bool valid = false;
@@ -143,7 +143,7 @@ int cinNextInteger(std::string message)
 		cout << message << endl;
 		getline(cin, line);
 
-		if (tryGetIntegerValue(line, number))
+		if (tryGetIntegerValue(line, number) && number >= minValue)
 		{
 			valid = true;
 		}

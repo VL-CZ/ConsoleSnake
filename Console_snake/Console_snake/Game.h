@@ -67,8 +67,9 @@ void printInColumns(std::string name, std::string points, std::string alive);
 /// load input until it's not an integer 
 /// </summary>
 /// <param name="message">message to print before every input</param>
+/// <param name="minValue">minimal value of returned integer</param>
 /// <returns></returns>
-int cinNextInteger(std::string message);
+int cinNextInteger(std::string message, int minValue);
 
 bool tryGetIntegerValue(std::string& s, int& value);
 
