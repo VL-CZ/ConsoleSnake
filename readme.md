@@ -29,7 +29,7 @@ Třída *UserSnake* obsahuje metodu, *tryToChangeDirection()*, která reaguje na
 
 Třída *AISnake* reprezentuje hada ovládaného počítačem.\
 Logika AI je navržená takto: V každém tahu projde bot všechny *zajímavé políčka* (tzn. hady, body a zdi) ve čtverci 5x5, kde střed je hlava daného hada. Nastaví jim (a také políčkům ve vzdálenosti 1 a 2 od této pozice) prioritu podle předem určených pravidel (metoda *getPriorities()*). \
-pozn. Priority se sčítají, tedy pokud je nějaké políčko mezi 2 zdmi, tak jeho priorita je (2$\times$*nextToWallOrSnakePriority* = -50)\
+pozn. Priority se sčítají, tedy pokud je nějaké políčko mezi 2 zdmi, tak jeho priorita je (2 \* *nextToWallOrSnakePriority* = -50)\
 pozn. Prázdná políčka mají prioritu 0
 
 Pravidla pro přidělování priorit jsou definovány v const atributech třídy *CellPriorities* - každý typ políčka má danou prioritu. Pro políčka ve vzdálenosti 2 od zajímavých bodů se spočítá priorita jako polovina priority políčka vedle zajímavého bodu.
