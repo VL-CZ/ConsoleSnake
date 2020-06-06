@@ -10,12 +10,16 @@ void Game::play()
 {
 	initialize();
 
+	cout << "Round: " << round << endl << endl;
+	round++;
+
 	map->print();
 	Sleep(1000);
 
 	while (inProgress)
 	{
 		update();
+		round++;
 	}
 
 	cout << endl;
@@ -29,7 +33,7 @@ void Game::update()
 
 	tryToGenerateValueInMap(0.2);
 
-	bool activeSnakes = 0;
+	int activeSnakes = 0;
 
 	// move
 	for (auto x : snakes)
@@ -50,26 +54,24 @@ void Game::update()
 		inProgress = false;
 	}
 
+	cout << "Round: " << round << endl << endl;
 	map->print();
 	printSummary();
 }
 
 void Game::initialize()
 {
-	int boardHeight;
-	int boardWidth;
+	int mapHeight;
+	int mapWidth;
 	int AI_snakesCount;
 
-	cout << "Zadejte vysku hraci plochy" << endl;
-	cin >> boardHeight;
+	mapHeight = cinNextInteger("Please enter the map height");
 
-	cout << "Zadejte sirku hraci plochy" << endl;
-	cin >> boardWidth;
+	mapWidth = cinNextInteger("Please enter the map width");
 
-	cout << "Zadejte pocet hadu ovladanych pocitacem" << endl;
-	cin >> AI_snakesCount;
+	AI_snakesCount = cinNextInteger("Please enter the number of AI controlled snakes");
 
-	map = make_shared<Map>(boardHeight, boardWidth, 0.05);
+	map = make_shared<Map>(mapHeight, mapWidth, 0.05);
 
 	Direction d = getRandomDirection();
 
@@ -128,4 +130,39 @@ void printInColumns(std::string name, std::string points, std::string alive)
 	cout << setw(10) << name << " | ";
 	cout << setw(5) << points << " | ";
 	cout << setw(6) << alive << endl;
+}
+
+int cinNextInteger(std::string message)
+{
+	int number;
+	bool valid = false;
+	string line;
+
+	do
+	{
+		cout << message << endl;
+		getline(cin, line);
+
+		if (tryGetIntegerValue(line, number))
+		{
+			valid = true;
+		}
+	} while (!valid);
+
+	return number;
+}
+
+bool tryGetIntegerValue(std::string& s, int& value)
+{
+	try
+	{
+		int i = stoi(s);
+
+		value = i;
+		return true;
+	}
+	catch (...)
+	{
+		return false;
+	}
 }
