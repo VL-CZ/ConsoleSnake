@@ -28,7 +28,7 @@ void UserSnake::tryToChangeDirection()
 	if (_kbhit())
 	{
 		char pressedKey = _getch();
-		Direction d;
+		Direction d = this->direction;
 
 		if (pressedKey == moveUpKey)
 		{
@@ -121,26 +121,30 @@ std::map<Direction, int> AISnake::getPriorities()
 
 			MapPosition currentPosition(i, j);
 			auto c = mapSquare->getCellAtPosition(currentPosition);
+			int points;
 
-			// obstacle or snake body cell
-			if (dynamic_pointer_cast<ObstacleCell>(c) != NULL || dynamic_pointer_cast<SnakeBodyCell>(c) != NULL)
+			// add negative priorities
+			if (!c->isSafeToGo())
 			{
-				priorityMap[currentPosition.row][currentPosition.column] += priorities.wallOrSnakePriority;
-				addAdjacentCellsPriorities(mapSquare, priorityMap, currentPosition, priorities.nextToWallOrSnakePriority);
+				// snake head
+				if (c->isSnakeHead())
+				{
+					priorityMap[currentPosition.row][currentPosition.column] += priorities.anotherSnakeHeadPriority;
+					addAdjacentCellsPriorities(mapSquare, priorityMap, currentPosition, priorities.nextToAnotherSnakeHeadPriority);
+				}
+				// obstacle or snake body cell
+				else
+				{
+					priorityMap[currentPosition.row][currentPosition.column] += priorities.wallOrSnakePriority;
+					addAdjacentCellsPriorities(mapSquare, priorityMap, currentPosition, priorities.nextToWallOrSnakePriority);
+				}
 			}
-			// snake head
-			else if (dynamic_pointer_cast<SnakeHeadCell>(c) != NULL)
+			// value cell -> add positive priorities
+			else if (c->tryGetValue(points))
 			{
-				priorityMap[currentPosition.row][currentPosition.column] += priorities.anotherSnakeHeadPriority;
-				addAdjacentCellsPriorities(mapSquare, priorityMap, currentPosition, priorities.nextToAnotherSnakeHeadPriority);
-			}
-			// value cell
-			else if (dynamic_pointer_cast<ValueCell>(c) != NULL)
-			{
-				auto valueCell = dynamic_pointer_cast<ValueCell>(c);
-				int priority = valueCell->getValue() * priorities.oneValuePriority;
+				int priority = points * priorities.oneValuePriority;
 				priorityMap[currentPosition.row][currentPosition.column] += priority;
-				addAdjacentCellsPriorities(mapSquare, priorityMap, currentPosition, valueCell->getValue() * priorities.nextToOneValuePriority);
+				addAdjacentCellsPriorities(mapSquare, priorityMap, currentPosition, points * priorities.nextToOneValuePriority);
 			}
 		}
 	}
@@ -181,7 +185,7 @@ void AISnake::addAdjacentCellsPriorities(std::shared_ptr<Map> mapSquare, std::ve
 	// remove duplicates from distanceTwoCells
 	sort(distanceTwoCells.begin(), distanceTwoCells.end());
 	distanceTwoCells.erase(
-		unique(distanceTwoCells.begin(), distanceTwoCells.end()), 
+		unique(distanceTwoCells.begin(), distanceTwoCells.end()),
 		distanceTwoCells.end());
 
 	// remove center position
@@ -267,7 +271,7 @@ void BaseSnake::executeMove()
 		auto head = getNewHeadCell();
 
 		int points;
-		bool hasValue = map->tryGetValue(newPosition, points);
+		bool hasValue = map->getCellAtPosition(newPosition)->tryGetValue(points);
 
 		map->setCellAtPosition(headPosition, body);
 		map->setCellAtPosition(newPosition, head);

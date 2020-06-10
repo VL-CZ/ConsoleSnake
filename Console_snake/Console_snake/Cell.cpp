@@ -6,9 +6,19 @@ std::string EmptyCell::toString()
 	return " ";
 }
 
+bool EmptyCell::isSafeToGo()
+{
+	return true;
+}
+
 std::string ObstacleCell::toString()
 {
 	return "#";
+}
+
+bool ObstacleCell::isSafeToGo()
+{
+	return false;
 }
 
 std::string ValueCell::toString()
@@ -25,9 +35,25 @@ int ValueCell::getValue()
 	return value;
 }
 
+bool ValueCell::isSafeToGo()
+{
+	return true;
+}
+
+bool ValueCell::tryGetValue(int& value)
+{
+	value = this->value;
+	return true;
+}
+
 std::string SnakeBodyCell::toString()
 {
 	return "O";
+}
+
+bool SnakeBodyCell::isSafeToGo()
+{
+	return false;
 }
 
 std::string AISnakeHeadCell::toString()
@@ -52,4 +78,24 @@ std::string UserSnakeHeadCell::toString()
 
 UserSnakeHeadCell::UserSnakeHeadCell(Direction d) : orientation(d)
 {
+}
+
+bool SnakeHeadCell::isSafeToGo()
+{
+	return false;
+}
+
+bool SnakeHeadCell::isSnakeHead()
+{
+	return true;
+}
+
+bool BaseCell::tryGetValue(int& value)
+{
+	return false;
+}
+
+bool BaseCell::isSnakeHead()
+{
+	return false;
 }

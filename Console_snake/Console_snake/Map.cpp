@@ -126,20 +126,6 @@ std::vector<MapPosition> Map::getAdjacentCellPositions(MapPosition position)
 	return adjacentCells;
 }
 
-bool Map::tryGetValue(MapPosition position, int& value)
-{
-	auto valueCell = dynamic_pointer_cast<ValueCell>(getCellAtPosition(position));
-	if (valueCell != NULL)
-	{
-		value = valueCell->getValue();
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
 std::shared_ptr<Map> Map::getSquare(MapPosition centralPosition, int squareSize)
 {
 	int upperBound = squareSize / 2;
@@ -192,7 +178,7 @@ bool Map::isGoodStartPosition(MapPosition mp, Direction headDirection)
 	auto p1 = mp.AddDirection(headDirection);
 	auto p2 = p1.AddDirection(headDirection);
 	auto p3 = p2.AddDirection(headDirection);
-	
+
 	Direction reversedDirection = getOppositeDirection(headDirection);
 	auto tail = mp.AddDirection(reversedDirection);
 	auto behindTail = tail.AddDirection(reversedDirection);
@@ -239,8 +225,7 @@ bool Map::isEmpty(MapPosition position)
 bool Map::isEmpty(int row, int column)
 {
 	return isInMap(MapPosition(row, column)) && // it's in map
-		(dynamic_pointer_cast<EmptyCell>(cells[row][column]) != NULL || // and it's either empty cell or cell with value
-		dynamic_pointer_cast<ValueCell>(cells[row][column]) != NULL);
+		cells[row][column]->isSafeToGo();
 }
 
 bool Map::isInMap(MapPosition position)

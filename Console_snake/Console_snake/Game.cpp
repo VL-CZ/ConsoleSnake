@@ -161,7 +161,11 @@ bool tryGetIntegerValue(std::string& s, int& value)
 		value = i;
 		return true;
 	}
-	catch (...)
+	catch (std::invalid_argument &e)
+	{
+		return false;
+	}
+	catch (std::out_of_range& e)
 	{
 		return false;
 	}

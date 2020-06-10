@@ -48,14 +48,6 @@ public:
 	std::vector<MapPosition> getAdjacentCellPositions(MapPosition position);
 
 	/// <summary>
-	/// try to get value from specified position
-	/// </summary>
-	/// <param name="position"></param>
-	/// <param name="value"></param>
-	/// <returns>true if the cell has value</returns>
-	bool tryGetValue(MapPosition position, int& value);
-
-	/// <summary>
 	/// get square of map
 	/// </summary>
 	/// <param name="centralPosition"></param>
